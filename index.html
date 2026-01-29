@@ -28,7 +28,13 @@
     <!-- HOME -->
     <div id="home" class="card">
       <div class="sub" id="homeTitle">Lesson 1: Basic English</div>
-      <button class="btn" id="startBtn">Start Learning</button>
+      <button onclick="startLesson()">Start Learning</button>
+
+<script>
+  function startLesson() {
+    window.location.href = "lesson.html";
+  }
+</script>
 
       <div style="height:16px"></div>
       <div class="big">Hello 👋</div>
