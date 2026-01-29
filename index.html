@@ -1,320 +1,148 @@
-<!DOCTYPE html><!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1.0" />
   <title>Learn English AI</title>
-
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-    }
-    .card {
-      background: #1e293b;
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 400px;
-      text-align: center;
-    }
+    body{margin:0;font-family:Arial,sans-serif;background:#0f172a;color:#fff;display:flex;justify-content:center;align-items:center;min-height:100vh;padding:20px}
+    .card{width:100%;max-width:420px;background:#1e293b;border-radius:14px;padding:22px;box-shadow:0 10px 30px rgba(0,0,0,.35);text-align:center}
+    h1{margin:0 0 8px}
+    .muted{color:#94a3b8;line-height:1.35}
+    .row{display:flex;gap:10px;margin-top:12px;flex-wrap:wrap}
+    button{flex:1;min-width:140px;padding:12px 14px;border:none;border-radius:10px;background:#22c55e;color:#04130a;font-weight:700;font-size:15px}
+    button.secondary{background:#334155;color:#e2e8f0}
+    input{width:100%;margin-top:12px;padding:12px;border-radius:10px;border:1px solid #334155;background:#0b1220;color:#fff;font-size:16px;outline:none}
+    .chip{display:inline-block;background:#0b1220;border:1px solid #334155;border-radius:999px;padding:6px 10px;margin-top:10px;color:#cbd5e1;font-size:13px}
+    .q{margin-top:14px;padding:12px;background:#0b1220;border:1px solid #334155;border-radius:12px;line-height:1.35;text-align:left}
+    .spanish{color:#f1f5f9;font-size:18px;font-weight:700;margin:0}
+    .hint{color:#94a3b8;margin:6px 0 0}
+    #feedback{margin-top:12px;font-weight:700;line-height:1.35}
+    .topbar{display:flex;justify-content:space-between;align-items:center;gap:10px;flex-wrap:wrap;margin-top:10px}
+    .progress{color:#cbd5e1;font-size:13px}
   </style>
 </head>
-
 <body>
-
-  <!-- 👇 AQUÍ EMPIEZA LA APP -->
   <div class="card">
     <h1>Learn English AI 🇺🇸</h1>
+    <p class="muted" id="story">Loading story…</p>
 
-    <p>You just arrived in the U.S. A teacher speaks to you.</p>
-
-    <button onclick="speak()">🔊 Teacher Anna</button>
-
-    <p>Say this in English:</p>
-    <strong>¿De dónde eres?</strong>
-
-    <input id="answer" placeholder="Type your answer..." />
-
-    <button onclick="check()">Check</button>
-
-    <p id="feedback"></p>
-  </div>
-
-  <script>
-    function speak() {
-      const s = new SpeechSynthesisUtterance("Where are you from?");
-      s.lang = "en-US";
-      speechSynthesis.speak(s);
-    }
-
-    function check() {
-      const v = document.getElementById("answer").value.toLowerCase().trim();
-      document.getElementById("feedback").innerText =
-        v === "where are you from"
-          ? "✅ Perfect!"
-          : "❌ Try again. Listen to the teacher.";
-    }
-  </script>
-  <!-- 👆 AQUÍ TERMINA -->
-
-</body>
-</html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Learn English AI</title>
-  <style>
-    :root{
-      --bg:#0f172a;
-      --card:#1e293b;
-      --text:#ffffff;
-      --muted:#94a3b8;
-      --btn:#22c55e;
-      --btnText:#0b1220;
-      --stroke:rgba(255,255,255,.08);
-    }
-    *{box-sizing:border-box}
-    body{
-      margin:0;
-      font-family: Arial, sans-serif;
-      background: radial-gradient(1200px 600px at 50% 30%, #1b2a52 0%, var(--bg) 55%, #0b1020 100%);
-      color:var(--text);
-      min-height:100vh;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      padding:20px;
-    }
-    .container{width:100%; max-width:520px;}
-    .card{
-      background: rgba(30,41,59,.92);
-      border:1px solid var(--stroke);
-      border-radius:16px;
-      padding:26px;
-      box-shadow: 0 12px 40px rgba(0,0,0,.35);
-    }
-    h1{margin:0 0 10px; font-size:34px; letter-spacing:.2px;}
-    p{margin:0; color:var(--muted); line-height:1.45;}
-    .btn{
-      margin-top:18px;
-      width:100%;
-      padding:14px 16px;
-      border:none;
-      border-radius:12px;
-      background:var(--btn);
-      color:var(--btnText);
-      font-size:18px;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .btn:active{transform:scale(.99)}
-    .row{display:flex; gap:10px; margin-top:14px;}
-    .smallBtn{
-      flex:1;
-      padding:12px 14px;
-      border-radius:12px;
-      border:1px solid var(--stroke);
-      background: rgba(15,23,42,.35);
-      color: #e2e8f0;
-      font-weight:700;
-      cursor:pointer;
-    }
-    .hidden{display:none}
-    .lesson{
-      margin-top:18px;
-      padding:16px;
-      border-radius:14px;
-      border:1px solid var(--stroke);
-      background: rgba(15,23,42,.35);
-    }
-    .badge{
-      display:inline-block;
-      padding:6px 10px;
-      border-radius:999px;
-      border:1px solid var(--stroke);
-      background: rgba(0,0,0,.15);
-      color:#e2e8f0;
-      font-size:13px;
-      font-weight:700;
-    }
-    .q{
-      margin-top:10px;
-      font-size:20px;
-      font-weight:800;
-      color:#f8fafc;
-    }
-    .hint{margin-top:8px; font-size:14px; color:var(--muted)}
-    .input{
-      margin-top:12px;
-      width:100%;
-      padding:12px 12px;
-      border-radius:12px;
-      border:1px solid var(--stroke);
-      outline:none;
-      background: rgba(2,6,23,.4);
-      color:#fff;
-      font-size:16px;
-    }
-    .feedback{
-      margin-top:10px;
-      font-weight:800;
-    }
-    .ok{color:#22c55e}
-    .no{color:#f87171}
-  </style>
-</head>
-<body>
-  <div class="card">
-  <h1>Learn English AI 🇺🇸</h1>
-
-  <p class="story">
-    You just arrived in the United States.  
-    A friendly teacher talks to you.
-  </p>
-
-  <div class="teacher">
-    👩‍🏫 <strong>Teacher Anna</strong>
-  </div>
-
-  <p class="question">
-    Say this in English:
-  </p>
-
-  <p class="spanish">
-    ¿De dónde eres?
-  </p>
-
-  <button onclick="speak()">🔊 Listen to Teacher</button>
-
-  <input id="answer" placeholder="Type your answer here..." />
-
-  <button onclick="check()">Check my English</button>
-
-  <p id="feedback"></p>
-</div>
-
-<script>
-function speak() {
-  const text = "Where are you from?";
-  const s = new SpeechSynthesisUtterance(text);
-  s.lang = "en-US";
-  s.rate = 0.9;
-  s.pitch = 1.1;
-  speechSynthesis.speak(s);
-}
-
-function check() {
-  const user = document.getElementById("answer").value.toLowerCase().trim();
-  const feedback = document.getElementById("feedback");
-
-  if (user === "where are you from") {
-    feedback.innerText = "✅ Great job! Teacher Anna is proud of you.";
-  } else {
-    feedback.innerText = "❌ Almost. Listen again and try.";
-  }
-}
-</script>
-    <div class="card" id="home">
-      <h1>Learn English AI 🇺🇸</h1>
-      <p>Practice English with AI teachers</p>
-
-      <button class="btn" id="startBtn">Start lesson</button>
-
-      <div class="lesson hidden" id="lesson">
-        <span class="badge">Lesson 1 • Greetings</span>
-
-        <div class="q">Say this in English:</div>
-        <p class="hint"><b>Spanish:</b> “Hola, ¿cómo estás?”</p>
-
-        <input class="input" id="answer" placeholder="Type your answer here..." />
-
-        <div class="row">
-          <button class="smallBtn" id="checkBtn">Check</button>
-          <button class="smallBtn" id="nextBtn">Next</button>
-        </div>
-
-        <div class="feedback" id="feedback"></div>
-        <p class="hint" id="example" class="hint"></p>
-      </div>
+    <div class="topbar">
+      <span class="chip" id="teacherTag">Teacher</span>
+      <span class="progress" id="progress">Lesson 1/1</span>
     </div>
+
+    <div class="q">
+      <p class="muted" style="margin:0 0 8px 0;">Say this in English:</p>
+      <p class="spanish" id="spanishText">…</p>
+      <p class="hint" id="hintText">…</p>
+    </div>
+
+    <div class="row">
+      <button onclick="speak()">🔊 Listen</button>
+      <button class="secondary" onclick="showAnswer()">👀 Show answer</button>
+    </div>
+
+    <input id="answer" placeholder="Type the English sentence…" />
+
+    <div class="row">
+      <button onclick="check()">✅ Check</button>
+      <button class="secondary" onclick="nextLesson()">➡️ Next</button>
+    </div>
+
+    <div id="feedback"></div>
   </div>
 
   <script>
-    // Elements
-    const startBtn = document.getElementById("startBtn");
-    const lesson = document.getElementById("lesson");
-    const answer = document.getElementById("answer");
-    const checkBtn = document.getElementById("checkBtn");
-    const nextBtn = document.getElementById("nextBtn");
-    const feedback = document.getElementById("feedback");
-    const example = document.getElementById("example");
-
-    <a href="lesson.html">
-    <button>Start lesson</button>
-    </a>// Simple lesson questions
-    const items = [
-      { es: "Hola, ¿cómo estás?", good: ["hello, how are you", "hi, how are you"], sample: '✅ Example: "Hello, how are you?"' },
-      { es: "Me llamo Faustino", good: ["my name is faustino", "i'm faustino", "i am faustino"], sample: '✅ Example: "My name is Faustino."' },
-      { es: "Mucho gusto", good: ["nice to meet you", "pleased to meet you"], sample: '✅ Example: "Nice to meet you."' },
-      { es: "¿De dónde eres?", good: ["where are you from"], sample: '✅ Example: "Where are you from?"' },
+    const lessons = [
+      {
+        teacher: "Teacher Anna",
+        story: "You just arrived in the United States. A friendly teacher meets you and starts a conversation.",
+        spanish: "¿De dónde eres?",
+        answer: "Where are you from?",
+        hint: "Tip: Start with “Where…”",
+        voice: { lang: "en-US", pitch: 1.15, rate: 0.95 }
+      },
+      {
+        teacher: "Teacher Mike",
+        story: "You walk into a coffee shop. The barista asks a common question.",
+        spanish: "¿Qué deseas tomar?",
+        answer: "What would you like to drink?",
+        hint: "Tip: “What would you like…” is very common.",
+        voice: { lang: "en-US", pitch: 0.9, rate: 0.95 }
+      },
+      {
+        teacher: "Teacher Alex",
+        story: "You meet someone new. They want to know your name.",
+        spanish: "¿Cómo te llamas?",
+        answer: "What's your name?",
+        hint: "Tip: Use What’s = What is",
+        voice: { lang: "en-US", pitch: 1.0, rate: 1.0 }
+      }
     ];
 
-    let idx = 0;
+    let i = 0;
 
-    function showItem() {
-      const hintP = document.querySelector("#lesson .hint b").parentElement;
-      hintP.innerHTML = "<b>Spanish:</b> “" + items[idx].es + "”";
-      answer.value = "";
-      feedback.textContent = "";
-      example.textContent = "";
-      answer.focus();
+    function render() {
+      const L = lessons[i];
+      document.getElementById("teacherTag").innerText = "🧑‍🏫 " + L.teacher;
+      document.getElementById("story").innerText = L.story;
+      document.getElementById("spanishText").innerText = L.spanish;
+      document.getElementById("hintText").innerText = L.hint;
+      document.getElementById("progress").innerText = `Lesson ${i+1}/${lessons.length}`;
+      document.getElementById("answer").value = "";
+      document.getElementById("feedback").innerText = "";
     }
 
     function normalize(s){
-      return (s || "")
-        .toLowerCase()
-        .replace(/[?.!,"']/g, "")
-        .replace(/\s+/g, " ")
-        .trim();
+      return s.toLowerCase().replace(/[’']/g,"'").trim();
     }
 
-    // Start
-    startBtn.addEventListener("click", () => {
-      lesson.classList.remove("hidden");
-      showItem();
-      // Scroll to lesson (mobile)
-      lesson.scrollIntoView({ behavior: "smooth", block: "start" });
-    });
+    function speak() {
+      const L = lessons[i];
+      const u = new SpeechSynthesisUtterance(L.answer);
+      u.lang = L.voice.lang;
+      u.pitch = L.voice.pitch;
+      u.rate = L.voice.rate;
+      speechSynthesis.cancel();
+      speechSynthesis.speak(u);
+    }
 
-    // Check
-    checkBtn.addEventListener("click", () => {
-      const user = normalize(answer.value);
+    function showAnswer(){
+      const L = lessons[i];
+      document.getElementById("feedback").innerText = "✅ Answer: " + L.answer;
+    }
+
+    function check() {
+      const L = lessons[i];
+      const user = normalize(document.getElementById("answer").value);
+      const correct = normalize(L.answer);
+
       if (!user) {
-        feedback.textContent = "Type an answer first 🙂";
-        feedback.className = "feedback no";
+        document.getElementById("feedback").innerText = "Type your answer first 🙂";
         return;
       }
-      const ok = items[idx].good.some(g => user.includes(g));
-      if (ok) {
-        feedback.textContent = "Correct ✅";
-        feedback.className = "feedback ok";
-      } else {
-        feedback.textContent = "Not quite ❌";
-        feedback.className = "feedback no";
-        example.textContent = items[idx].sample;
-      }
-    });
 
-    // Next
-    nextBtn.addEventListener("click", () => {
-      idx = (idx + 1) % items.length;
-      showItem();
-    });
+      document.getElementById("feedback").innerText =
+        (user === correct)
+          ? "✅ Perfect! Continue the story ➡️"
+          : "❌ Not quite. Tap 🔊 Listen and try again.";
+    }
+
+    function nextLesson() {
+      if (i < lessons.length - 1) {
+        i++;
+        render();
+      } else {
+        document.getElementById("story").innerText = "🎉 You finished the demo! Next step: add 20 lessons and a score system.";
+        document.getElementById("spanishText").innerText = "¡Buen trabajo!";
+        document.getElementById("hintText").innerText = "Want more lessons? We can add them fast.";
+        document.getElementById("feedback").innerText = "";
+        document.getElementById("progress").innerText = `Done ✅`;
+      }
+    }
+
+    render();
   </script>
 </body>
 </html>
