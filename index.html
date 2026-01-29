@@ -3,202 +3,232 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>English Tutor AI — Real Practice</title>
+  <title>English Tutor AI — Curso Completo</title>
   <style>
     :root{
-      --bg:#0b1220; --card:#101b33; --card2:#0f172a;
-      --text:#e5e7eb; --muted:#94a3b8; --line:#22304f;
-      --green:#22c55e; --blue:#60a5fa; --yellow:#fbbf24; --red:#ef4444;
+      --bg:#0b1220; --panel:#0f172a; --card:#101b33; --line:#22304f;
+      --text:#e5e7eb; --muted:#94a3b8; --green:#22c55e; --red:#ef4444; --yellow:#fbbf24;
       --radius:16px;
     }
     *{box-sizing:border-box}
     body{
       margin:0; background:linear-gradient(180deg,#070c16, #0b1220 35%, #070c16);
-      color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
-      min-height:100vh; display:flex; justify-content:center; padding:18px;
+      color:var(--text); font-family: system-ui, -apple-system, Arial, sans-serif;
+      min-height:100vh;
     }
-    .app{width:100%; max-width:980px; display:grid; gap:14px; grid-template-columns: 1fr; }
-    @media (min-width: 880px){ .app{grid-template-columns: 360px 1fr;} }
-
+    .app{
+      display:grid; grid-template-columns: 1fr; gap:14px;
+      max-width:1100px; margin:0 auto; padding:16px;
+    }
+    @media (min-width: 920px){
+      .app{grid-template-columns: 360px 1fr;}
+    }
     .panel{
-      background:rgba(16,27,51,.85); border:1px solid var(--line);
-      border-radius:var(--radius); padding:14px;
+      background:rgba(15,23,42,.86);
+      border:1px solid var(--line);
+      border-radius:var(--radius);
+      padding:14px;
       box-shadow: 0 12px 30px rgba(0,0,0,.35);
       backdrop-filter: blur(8px);
     }
-    .brand{display:flex; align-items:center; justify-content:space-between; gap:10px;}
-    .brand h1{margin:0; font-size:18px; letter-spacing:.2px}
-    .tag{font-size:12px; color:var(--muted); border:1px solid var(--line); padding:6px 10px; border-radius:999px; background:#0b1220;}
-    .stats{margin-top:12px; display:grid; gap:10px;}
+    h1{margin:0; font-size:18px}
+    .sub{margin:6px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .chip{
+      display:inline-flex; align-items:center; gap:8px;
+      border:1px solid var(--line); background:#0b1220; color:#cbd5e1;
+      padding:7px 10px; border-radius:999px; font-size:12px;
+    }
+    .topRow{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .statGrid{display:grid; gap:10px; margin-top:12px}
     .stat{
-      background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:12px;
+      background:#0b1220; border:1px solid var(--line); border-radius:14px; padding:12px;
       display:flex; justify-content:space-between; align-items:center;
     }
-    .stat .k{color:var(--muted); font-size:12px}
-    .stat .v{font-weight:800}
-    .progress{
-      margin-top:12px; background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:12px;
-    }
-    .bar{height:10px; border-radius:999px; background:#0b1220; border:1px solid var(--line); overflow:hidden}
+    .k{color:var(--muted); font-size:12px}
+    .v{font-weight:900; font-size:16px}
+    .bar{height:10px; border-radius:999px; background:#070c16; border:1px solid var(--line); overflow:hidden}
     .fill{height:100%; width:0%; background:var(--green)}
     .small{color:var(--muted); font-size:12px; line-height:1.35}
+    .divider{height:1px; background:var(--line); margin:12px 0}
+
+    /* Units list */
+    .unit{margin-top:10px; padding:10px; border-radius:14px; border:1px solid var(--line); background:#0b1220}
+    .unitTitle{font-weight:900; margin:0; font-size:13px}
+    .unitDesc{margin:4px 0 0; color:var(--muted); font-size:12px; line-height:1.35}
+    .unitBtnRow{display:flex; gap:8px; flex-wrap:wrap; margin-top:8px}
+    button{
+      cursor:pointer; border:none; border-radius:14px; padding:12px 12px; font-weight:900; font-size:14px;
+    }
+    .btn{flex:1; min-width:160px}
+    .primary{background:var(--green); color:#05210f}
+    .secondary{background:#334155; color:#e2e8f0}
+    .warn{background:var(--yellow); color:#1f1300}
+    .danger{background:var(--red); color:#fff}
+    .tinyBtn{
+      padding:8px 10px; border-radius:999px; font-size:12px; font-weight:800;
+      background:#111a2e; border:1px solid var(--line); color:#e2e8f0;
+    }
 
     /* Main */
-    .header{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;}
-    .header .title{margin:0; font-size:18px}
-    .header .sub{margin:4px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .tutors{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
-    .tutorBtn{
-      border:1px solid var(--line); background:#0b1220; color:var(--text);
-      padding:10px 10px; border-radius:14px; cursor:pointer; min-width:170px;
-      display:flex; justify-content:space-between; align-items:center; gap:8px;
+    .header{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap}
+    .lessonCard{
+      margin-top:12px; background:#0b1220; border:1px solid var(--line);
+      border-radius:var(--radius); padding:14px;
     }
-    .tutorBtn.active{border-color: rgba(34,197,94,.7); box-shadow: 0 0 0 3px rgba(34,197,94,.15);}
-    .tutorName{font-weight:800; font-size:13px}
-    .tutorRole{color:var(--muted); font-size:12px}
-    .pill{font-size:11px; color:var(--muted); border:1px solid var(--line); padding:4px 8px; border-radius:999px}
-
-    .lesson{
-      margin-top:12px; background:var(--card2); border:1px solid var(--line); border-radius:var(--radius); padding:14px;
-    }
-    .scene{color:var(--muted); font-size:13px; line-height:1.35}
+    .scene{margin:0; color:var(--muted); font-size:13px; line-height:1.35}
     .prompt{
-      margin-top:10px; background:#0b1220; border:1px solid var(--line);
+      margin-top:10px; background:#111a2e; border:1px solid #25385e;
       border-radius:14px; padding:12px;
     }
     .label{color:var(--muted); font-size:12px; margin:0 0 6px}
-    .es{margin:0; font-size:18px; font-weight:900}
-    .en{margin:8px 0 0; font-size:16px; font-weight:800; color:#dbeafe}
-    .hint{margin:8px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
-    .meaning{margin:8px 0 0; color:#cbd5e1; font-size:13px; line-height:1.35}
-
-    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
-    .btn{
-      flex:1; min-width:170px;
-      border:none; border-radius:14px; padding:12px 12px; font-weight:900; font-size:14px;
-      cursor:pointer;
-    }
-    .btn.primary{background:var(--green); color:#05210f}
-    .btn.secondary{background:#334155; color:#e2e8f0}
-    .btn.warn{background:var(--yellow); color:#1f1300}
-    .btn.danger{background:var(--red); color:white}
-    input, textarea{
-      width:100%; margin-top:10px; background:#0b1220; color:var(--text);
+    .es{margin:0; font-size:18px; font-weight:950}
+    .hint{margin:10px 0 0; color:#cbd5e1; font-size:13px; line-height:1.35}
+    .grid{display:grid; gap:12px; margin-top:12px}
+    @media (min-width: 760px){ .grid{grid-template-columns: 1fr 1fr;} }
+    input{
+      width:100%; margin-top:8px; background:#0b1220; color:var(--text);
       border:1px solid var(--line); border-radius:14px; padding:12px; font-size:16px;
       outline:none;
     }
-    .choices{display:grid; gap:10px; margin-top:10px}
-    .choice{
-      text-align:left; padding:12px; border-radius:14px; border:1px solid var(--line);
-      background:#0b1220; color:var(--text); cursor:pointer; font-weight:800;
+    .bank{display:flex; flex-wrap:wrap; gap:8px; margin-top:8px}
+    .tok{
+      padding:8px 10px; border-radius:999px; border:1px solid var(--line);
+      background:#0b1220; color:#fff; font-weight:900; font-size:13px;
     }
-    .choice.correct{border-color: rgba(34,197,94,.7)}
-    .choice.wrong{border-color: rgba(239,68,68,.7)}
-    .feedback{
-      margin-top:12px; font-weight:900; line-height:1.35;
+    .tok:disabled{opacity:.5}
+    .built{
+      margin-top:10px; padding:10px; border-radius:14px;
+      border:1px dashed var(--line); min-height:48px; background:rgba(7,12,22,.35);
+      color:#cbd5e1;
     }
-    .feedback.ok{color:#86efac}
-    .feedback.bad{color:#fca5a5}
-    .divider{height:1px; background:var(--line); margin:12px 0}
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .feedback{margin-top:12px; font-weight:950; line-height:1.35}
+    .ok{color:#86efac}
+    .bad{color:#fca5a5}
+    .lock{opacity:.7}
+    .tutors{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .tutorBtn{
+      display:flex; justify-content:space-between; align-items:center; gap:10px;
+      min-width:210px;
+      background:#0b1220; border:1px solid var(--line);
+      color:var(--text); border-radius:14px; padding:10px 10px;
+    }
+    .tutorBtn.active{border-color: rgba(34,197,94,.7); box-shadow: 0 0 0 3px rgba(34,197,94,.15);}
+    .tName{font-weight:950; font-size:13px}
+    .tRole{color:var(--muted); font-size:12px}
   </style>
 </head>
 <body>
   <div class="app">
-    <!-- Left panel -->
+    <!-- Sidebar -->
     <div class="panel">
-      <div class="brand">
-        <h1>English Tutor AI 🇺🇸</h1>
-        <span class="tag" id="modeTag">Survival</span>
-      </div>
-      <p class="small" style="margin:8px 0 0">
-        Aprende inglés real: escucha, traduce, responde y practica conversación.
-        <br/>Honesto: sin backend = no “chatGPT dentro”, pero sí entrenamiento real.
-      </p>
-
-      <div class="stats">
-        <div class="stat"><div><div class="k">XP</div><div class="v" id="xp">0</div></div><div class="pill" id="lvl">Nivel 1</div></div>
-        <div class="stat"><div><div class="k">Racha</div><div class="v" id="streak">0</div></div><div class="pill">🔥</div></div>
-        <div class="stat"><div><div class="k">Lección</div><div class="v" id="step">1</div></div><div class="pill" id="unit">Unidad 1</div></div>
+      <div class="topRow">
+        <div>
+          <h1>English Tutor AI 🇺🇸</h1>
+          <p class="sub">Curso completo (210 lecciones). Método duro-humano: piensas → respondes → te corrijo → repites.</p>
+        </div>
+        <span class="chip" id="modeChip">🔥 Duro-humano</span>
       </div>
 
-      <div class="progress">
-        <div class="small" id="progressText">Progreso: 0%</div>
-        <div class="bar" style="margin-top:8px"><div class="fill" id="fill"></div></div>
+      <div class="statGrid">
+        <div class="stat"><div><div class="k">Lección</div><div class="v" id="statLesson">1/210</div></div><span class="chip" id="statUnit">Unidad 1.1</span></div>
+        <div class="stat"><div><div class="k">XP</div><div class="v" id="statXP">0</div></div><span class="chip" id="statLevel">Nivel 1</span></div>
+        <div class="stat"><div><div class="k">Racha</div><div class="v" id="statStreak">0</div></div><span class="chip">✅</span></div>
+        <div class="stat" style="display:block">
+          <div class="k">Progreso</div>
+          <div class="bar" style="margin-top:8px"><div class="fill" id="fill"></div></div>
+          <div class="small" id="pct" style="margin-top:8px">0%</div>
+        </div>
       </div>
 
       <div class="divider"></div>
 
       <div class="small">
-        ✅ Voz ES/EN usando tu teléfono (SpeechSynthesis).<br/>
-        🎤 Reconocimiento de voz depende del navegador (si no funciona, se usa escritura).<br/>
-        Si no se oye: sube volumen y quita silencio.
+        Consejos iPhone: sube volumen y quita silencio. La voz solo funciona después de tocar un botón.
       </div>
 
-      <div class="actions" style="margin-top:12px">
-        <button class="btn secondary" onclick="resetAll()">🔁 Reiniciar</button>
+      <div class="actions">
+        <button class="btn secondary" onclick="jumpToFirstIncomplete()">▶️ Continuar</button>
+        <button class="btn secondary" onclick="resetProgress()">🔁 Reiniciar</button>
         <button class="btn danger" onclick="stopVoice()">🔇 Parar voz</button>
       </div>
+
+      <div class="divider"></div>
+
+      <div id="units"></div>
     </div>
 
-    <!-- Main panel -->
+    <!-- Main -->
     <div class="panel">
       <div class="header">
         <div>
-          <p class="title" id="lessonTitle">Cargando…</p>
-          <p class="sub" id="lessonSub">…</p>
+          <div class="chip" id="lessonMeta">Unidad</div>
+          <h2 style="margin:10px 0 0; font-size:18px" id="lessonTitle">Cargando…</h2>
+          <p class="small" id="lessonSub" style="margin:6px 0 0">…</p>
         </div>
-        <div class="pill" id="exerciseTag">Exercise</div>
+        <div class="chip" id="nextLockChip">🔒 Debes acertar para pasar</div>
       </div>
 
       <div class="tutors">
         <button class="tutorBtn active" id="t0" onclick="setTutor(0)">
           <div>
-            <div class="tutorName">👩‍🏫 Ana</div>
-            <div class="tutorRole">Explica en español</div>
+            <div class="tName">👩‍🏫 Ana</div>
+            <div class="tRole">Corrige en español</div>
           </div>
-          <span class="pill">ES → EN</span>
+          <span class="chip">ES→EN</span>
         </button>
         <button class="tutorBtn" id="t1" onclick="setTutor(1)">
           <div>
-            <div class="tutorName">👨‍🏫 Mike</div>
-            <div class="tutorRole">Pronunciación</div>
+            <div class="tName">👨‍🏫 Mike</div>
+            <div class="tRole">Pronunciación USA</div>
           </div>
-          <span class="pill">EN audio</span>
+          <span class="chip">Audio EN</span>
         </button>
         <button class="tutorBtn" id="t2" onclick="setTutor(2)">
           <div>
-            <div class="tutorName">🧑‍🏫 Alex</div>
-            <div class="tutorRole">Conversación</div>
+            <div class="tName">🧑‍🏫 Alex</div>
+            <div class="tRole">Inglés natural</div>
           </div>
-          <span class="pill">Chat guiado</span>
+          <span class="chip">Fluidez</span>
         </button>
       </div>
 
-      <div class="lesson">
+      <div class="lessonCard">
         <p class="scene" id="scene">…</p>
 
         <div class="prompt">
-          <p class="label" id="labelES">Español:</p>
+          <p class="label">Tutor pregunta (ES):</p>
           <p class="es" id="esText">…</p>
-
-          <p class="label" id="labelEN" style="margin-top:12px">Inglés (objetivo):</p>
-          <p class="en" id="enText">…</p>
-
-          <p class="meaning" id="meaning">…</p>
-          <p class="hint" id="hint">…</p>
+          <p class="hint" id="hint">💡 Pista oculta (toca “Pista”)</p>
         </div>
 
-        <div id="exerciseArea"></div>
+        <div class="grid">
+          <div class="prompt">
+            <p class="label">✍️ Responder escribiendo (EN)</p>
+            <input id="typed" placeholder="Escribe en inglés…" />
+            <div class="small">Regla: primero intenta sin ayuda. Si fallas, usa pista o word bank.</div>
+          </div>
+
+          <div class="prompt">
+            <p class="label">🧩 Armar con palabras (Word Bank)</p>
+            <div class="bank" id="bank"></div>
+            <div class="built">Tu frase: <span id="builtText" style="font-weight:900"></span></div>
+            <div class="actions" style="margin-top:10px">
+              <button class="btn secondary" onclick="resetWordBank()">↩️ Rehacer</button>
+              <button class="btn secondary" onclick="copyBuiltToInput()">➡️ Pasar al input</button>
+            </div>
+          </div>
+        </div>
 
         <div class="actions">
-          <button class="btn warn" onclick="speakPrompt()">🔊 Tutor pregunta (ES)</button>
-          <button class="btn secondary" onclick="speakAnswer()">🔊 Escuchar inglés (EN)</button>
-          <button class="btn secondary" onclick="showHelp()">💡 Ver pista</button>
+          <button class="btn warn" onclick="speakQuestion()">🔊 Pregunta (ES)</button>
+          <button class="btn secondary" onclick="speakAnswer()">🔊 Inglés (EN)</button>
+          <button class="btn secondary" onclick="showHint()">💡 Pista</button>
         </div>
 
         <div class="actions">
           <button class="btn primary" onclick="check()">✅ Revisar</button>
-          <button class="btn secondary" onclick="next()">➡️ Siguiente</button>
+          <button class="btn secondary" id="nextBtn" onclick="next()">➡️ Siguiente</button>
         </div>
 
         <div class="feedback" id="fb"></div>
@@ -207,352 +237,634 @@
   </div>
 
 <script>
-  // --------- Data (real, honesto, útil) ----------
-  const tutors = [
-    { name:"Ana", esLang:"es-ES", enLang:"en-US", pitchES:1.05, rateES:0.97, pitchEN:1.10, rateEN:0.92 },
-    { name:"Mike", esLang:"es-ES", enLang:"en-US", pitchES:0.95, rateES:0.95, pitchEN:0.92, rateEN:0.92 },
-    { name:"Alex", esLang:"es-ES", enLang:"en-US", pitchES:1.00, rateES:0.98, pitchEN:1.02, rateEN:0.98 }
-  ];
+/* =========================
+   Curso completo (210)
+   ========================= */
 
-  const unit = {
-    name: "Unidad 1 — Supervivencia",
-    lessons: [
-      {
-        title: "Conocer a alguien",
-        scene: "Situación: primera vez en EE.UU. alguien te pregunta de dónde eres.",
-        es: "¿De dónde eres?",
-        en: "Where are you from?",
-        meaning: "Significa: ‘¿Cuál es tu lugar de origen?’ (país/ciudad).",
-        hint: "Pista: empieza con Where… termina con from.",
-        type: "TYPE_TRANSLATION"
-      },
-      {
-        title: "Cafetería",
-        scene: "Situación: en una cafetería. Te preguntan qué quieres tomar.",
-        es: "¿Qué te gustaría tomar?",
-        en: "What would you like to drink?",
-        meaning: "Es una forma educada para pedir algo. Muy común.",
-        hint: "Pista: la frase de cortesía usa ‘would you like’.",
-        type: "MULTIPLE_CHOICE",
-        choices: [
-          "What you like drink?",
-          "What would you like to drink?",
-          "Where would you drink?"
-        ],
-        answerIndex: 1
-      },
-      {
-        title: "Tu nombre",
-        scene: "Situación: alguien quiere saber tu nombre.",
-        es: "¿Cómo te llamas?",
-        en: "What's your name?",
-        meaning: "What’s = What is. Muy básico y natural.",
-        hint: "Pista: contracción What’s + your + name?",
-        type: "ORDER_WORDS",
-        bank: ["your", "name?", "What's"]
-      },
-      {
-        title: "Mini conversación",
-        scene: "Situación: alguien dice ‘Nice to meet you!’ Tú respondes.",
-        es: "Igualmente / Mucho gusto",
-        en: "Nice to meet you too!",
-        meaning: "‘too’ significa ‘también’. Respuesta natural.",
-        hint: "Pista: la respuesta correcta incluye ‘too’.",
-        type: "GUIDED_CHAT",
-        botEN: "Nice to meet you!",
-        options: ["Nice meet you.", "Nice to meet you too!", "Where are you too?"],
-        answerIndex: 1
+const UNITS = [
+  { id:"1.1", name:"Unidad 1.1 — Entender y pedir ayuda", range:[1,20], desc:"No entiendo, repetir, ayuda, señales." },
+  { id:"1.2", name:"Unidad 1.2 — Presentarte y conversar", range:[21,40], desc:"Nombre, origen, conversación básica." },
+  { id:"1.3", name:"Unidad 1.3 — Comer, pagar, moverte", range:[41,60], desc:"Restaurante, dinero, direcciones." },
+  { id:"2.1", name:"Unidad 2.1 — Presente real", range:[61,80], desc:"Estructuras básicas que se usan diario." },
+  { id:"2.2", name:"Unidad 2.2 — Pasado útil", range:[81,100], desc:"Ayer, pasó, funcionó, no funcionó." },
+  { id:"2.3", name:"Unidad 2.3 — Futuro práctico", range:[101,120], desc:"Planes, promesas, decisiones." },
+  { id:"3.1", name:"Unidad 3.1 — Trabajo", range:[121,145], desc:"Horario, acceso, tareas, pedir explicación." },
+  { id:"3.2", name:"Unidad 3.2 — Problemas y soluciones", range:[146,170], desc:"Reembolso, reemplazo, acuerdos, conflictos." },
+  { id:"4.1", name:"Unidad 4.1 — Respuestas reales", range:[171,190], desc:"Respuestas cortas y naturales." },
+  { id:"4.2", name:"Unidad 4.2 — Inglés de la vida real", range:[191,210], desc:"Gonna/wanna, frases de uso real." },
+];
+
+// Lecciones: id, unit, es, en
+const LESSONS = [
+  // 1.1 (1-20)
+  {id:1, unit:"1.1", es:"No entiendo", en:"I don't understand."},
+  {id:2, unit:"1.1", es:"¿Puede repetir?", en:"Can you repeat?"},
+  {id:3, unit:"1.1", es:"Más despacio, por favor", en:"More slowly, please."},
+  {id:4, unit:"1.1", es:"¿Qué significa…?", en:"What does it mean?"},
+  {id:5, unit:"1.1", es:"¿Cómo se dice … en inglés?", en:"How do you say it in English?"},
+  {id:6, unit:"1.1", es:"Necesito ayuda", en:"I need help."},
+  {id:7, unit:"1.1", es:"Estoy perdido", en:"I'm lost."},
+  {id:8, unit:"1.1", es:"¿Habla español?", en:"Do you speak Spanish?"},
+  {id:9, unit:"1.1", es:"No sé", en:"I don't know."},
+  {id:10, unit:"1.1", es:"Un momento, por favor", en:"One moment, please."},
+  {id:11, unit:"1.1", es:"Espere un segundo", en:"Wait a second."},
+  {id:12, unit:"1.1", es:"No escucho bien", en:"I can't hear well."},
+  {id:13, unit:"1.1", es:"No entiendo eso", en:"I don't understand that."},
+  {id:14, unit:"1.1", es:"¿Puede escribirlo?", en:"Can you write it?"},
+  {id:15, unit:"1.1", es:"¿Puede mostrarme?", en:"Can you show me?"},
+  {id:16, unit:"1.1", es:"Repita otra vez", en:"Repeat it again."},
+  {id:17, unit:"1.1", es:"Está bien / Está mal", en:"It's okay / It's wrong."},
+  {id:18, unit:"1.1", es:"¿Es correcto?", en:"Is it correct?"},
+  {id:19, unit:"1.1", es:"Gracias por la ayuda", en:"Thanks for the help."},
+  {id:20, unit:"1.1", es:"Perdón, me equivoqué", en:"Sorry, I made a mistake."},
+
+  // 1.2 (21-40)
+  {id:21, unit:"1.2", es:"¿Cómo te llamas?", en:"What's your name?"},
+  {id:22, unit:"1.2", es:"Me llamo…", en:"My name is…"},
+  {id:23, unit:"1.2", es:"¿De dónde eres?", en:"Where are you from?"},
+  {id:24, unit:"1.2", es:"Soy de…", en:"I'm from…"},
+  {id:25, unit:"1.2", es:"Mucho gusto", en:"Nice to meet you."},
+  {id:26, unit:"1.2", es:"Igualmente", en:"Nice to meet you too."},
+  {id:27, unit:"1.2", es:"¿Cuántos años tienes?", en:"How old are you?"},
+  {id:28, unit:"1.2", es:"Tengo 30 años", en:"I'm 30 years old."},
+  {id:29, unit:"1.2", es:"¿Dónde vives?", en:"Where do you live?"},
+  {id:30, unit:"1.2", es:"Vivo aquí", en:"I live here."},
+  {id:31, unit:"1.2", es:"¿A qué te dedicas?", en:"What do you do?"},
+  {id:32, unit:"1.2", es:"Trabajo en…", en:"I work in…"},
+  {id:33, unit:"1.2", es:"Estoy buscando trabajo", en:"I'm looking for a job."},
+  {id:34, unit:"1.2", es:"Soy nuevo aquí", en:"I'm new here."},
+  {id:35, unit:"1.2", es:"¿Hace cuánto tiempo estás aquí?", en:"How long have you been here?"},
+  {id:36, unit:"1.2", es:"Hace dos meses", en:"For two months."},
+  {id:37, unit:"1.2", es:"¿Te gusta aquí?", en:"Do you like it here?"},
+  {id:38, unit:"1.2", es:"Sí / No", en:"Yes / No."},
+  {id:39, unit:"1.2", es:"Más o menos", en:"More or less."},
+  {id:40, unit:"1.2", es:"Nos vemos luego", en:"See you later."},
+
+  // 1.3 (41-60)
+  {id:41, unit:"1.3", es:"Quiero esto", en:"I want this."},
+  {id:42, unit:"1.3", es:"Necesito eso", en:"I need that."},
+  {id:43, unit:"1.3", es:"¿Cuánto cuesta?", en:"How much is it?"},
+  {id:44, unit:"1.3", es:"Es muy caro", en:"It's very expensive."},
+  {id:45, unit:"1.3", es:"Está bien / Está mal", en:"It's good / It's bad."},
+  {id:46, unit:"1.3", es:"No es lo que pedí", en:"This is not what I ordered."},
+  {id:47, unit:"1.3", es:"¿Dónde está el baño?", en:"Where is the bathroom?"},
+  {id:48, unit:"1.3", es:"¿Puedo pagar con tarjeta?", en:"Can I pay with card?"},
+  {id:49, unit:"1.3", es:"¿Aceptan efectivo?", en:"Do you accept cash?"},
+  {id:50, unit:"1.3", es:"La cuenta, por favor", en:"The check, please."},
+  {id:51, unit:"1.3", es:"Tengo hambre", en:"I'm hungry."},
+  {id:52, unit:"1.3", es:"Tengo sed", en:"I'm thirsty."},
+  {id:53, unit:"1.3", es:"¿A qué hora abre?", en:"What time do you open?"},
+  {id:54, unit:"1.3", es:"¿A qué hora cierra?", en:"What time do you close?"},
+  {id:55, unit:"1.3", es:"Estoy esperando", en:"I'm waiting."},
+  {id:56, unit:"1.3", es:"Es aquí", en:"It's here."},
+  {id:57, unit:"1.3", es:"Es allá", en:"It's over there."},
+  {id:58, unit:"1.3", es:"A la derecha / izquierda", en:"To the right / left."},
+  {id:59, unit:"1.3", es:"Cerca / lejos", en:"Near / far."},
+  {id:60, unit:"1.3", es:"Gracias, ya comí", en:"Thanks, I already ate."},
+
+  // 2.1 (61-80)
+  {id:61, unit:"2.1", es:"Trabajo aquí", en:"I work here."},
+  {id:62, unit:"2.1", es:"Estoy trabajando", en:"I'm working."},
+  {id:63, unit:"2.1", es:"No trabajo hoy", en:"I don't work today."},
+  {id:64, unit:"2.1", es:"Trabajo mañana", en:"I work tomorrow."},
+  {id:65, unit:"2.1", es:"Necesito tiempo", en:"I need time."},
+  {id:66, unit:"2.1", es:"Quiero aprender", en:"I want to learn."},
+  {id:67, unit:"2.1", es:"Tengo una pregunta", en:"I have a question."},
+  {id:68, unit:"2.1", es:"No tengo tiempo", en:"I don't have time."},
+  {id:69, unit:"2.1", es:"Puedo hacerlo", en:"I can do it."},
+  {id:70, unit:"2.1", es:"No puedo hacerlo", en:"I can't do it."},
+  {id:71, unit:"2.1", es:"Tengo un problema", en:"I have a problem."},
+  {id:72, unit:"2.1", es:"No tengo problema", en:"I don't have a problem."},
+  {id:73, unit:"2.1", es:"Estoy listo", en:"I'm ready."},
+  {id:74, unit:"2.1", es:"No estoy listo", en:"I'm not ready."},
+  {id:75, unit:"2.1", es:"Estoy ocupado", en:"I'm busy."},
+  {id:76, unit:"2.1", es:"Estoy libre", en:"I'm free."},
+  {id:77, unit:"2.1", es:"Estoy cansado", en:"I'm tired."},
+  {id:78, unit:"2.1", es:"Estoy aprendiendo", en:"I'm learning."},
+  {id:79, unit:"2.1", es:"Me gusta", en:"I like it."},
+  {id:80, unit:"2.1", es:"No me gusta", en:"I don't like it."},
+
+  // 2.2 (81-100)
+  {id:81, unit:"2.2", es:"Ayer", en:"Yesterday."},
+  {id:82, unit:"2.2", es:"Ayer trabajé", en:"I worked yesterday."},
+  {id:83, unit:"2.2", es:"Ayer fui", en:"I went yesterday."},
+  {id:84, unit:"2.2", es:"Ayer hice", en:"I did yesterday."},
+  {id:85, unit:"2.2", es:"Fue difícil", en:"It was hard."},
+  {id:86, unit:"2.2", es:"Fue fácil", en:"It was easy."},
+  {id:87, unit:"2.2", es:"No funcionó", en:"It didn't work."},
+  {id:88, unit:"2.2", es:"Funcionó", en:"It worked."},
+  {id:89, unit:"2.2", es:"Llegué tarde", en:"I arrived late."},
+  {id:90, unit:"2.2", es:"Llegué temprano", en:"I arrived early."},
+  {id:91, unit:"2.2", es:"Perdí mi trabajo", en:"I lost my job."},
+  {id:92, unit:"2.2", es:"Encontré trabajo", en:"I found a job."},
+  {id:93, unit:"2.2", es:"Tuve un problema", en:"I had a problem."},
+  {id:94, unit:"2.2", es:"No tuve tiempo", en:"I didn't have time."},
+  {id:95, unit:"2.2", es:"Fui al doctor", en:"I went to the doctor."},
+  {id:96, unit:"2.2", es:"Me sentí mal", en:"I felt bad."},
+  {id:97, unit:"2.2", es:"Me sentí bien", en:"I felt good."},
+  {id:98, unit:"2.2", es:"¿Qué pasó?", en:"What happened?"},
+  {id:99, unit:"2.2", es:"Pasó ayer", en:"It happened yesterday."},
+  {id:100, unit:"2.2", es:"Todo estuvo bien", en:"Everything was fine."},
+
+  // 2.3 (101-120)
+  {id:101, unit:"2.3", es:"Voy a trabajar", en:"I'm going to work."},
+  {id:102, unit:"2.3", es:"Voy a estudiar", en:"I'm going to study."},
+  {id:103, unit:"2.3", es:"Voy a llamar", en:"I'm going to call."},
+  {id:104, unit:"2.3", es:"Voy a regresar", en:"I'm going back."},
+  {id:105, unit:"2.3", es:"Voy a intentarlo", en:"I'm going to try."},
+  {id:106, unit:"2.3", es:"Mañana trabajo", en:"I work tomorrow."},
+  {id:107, unit:"2.3", es:"La próxima semana", en:"Next week."},
+  {id:108, unit:"2.3", es:"Más tarde", en:"Later."},
+  {id:109, unit:"2.3", es:"Pronto", en:"Soon."},
+  {id:110, unit:"2.3", es:"No hoy", en:"Not today."},
+  {id:111, unit:"2.3", es:"Tal vez", en:"Maybe."},
+  {id:112, unit:"2.3", es:"Creo que sí", en:"I think so."},
+  {id:113, unit:"2.3", es:"Creo que no", en:"I don't think so."},
+  {id:114, unit:"2.3", es:"Veremos", en:"We'll see."},
+  {id:115, unit:"2.3", es:"Te llamo luego", en:"I'll call you later."},
+  {id:116, unit:"2.3", es:"Te aviso", en:"I'll let you know."},
+  {id:117, unit:"2.3", es:"No estoy seguro", en:"I'm not sure."},
+  {id:118, unit:"2.3", es:"Estoy seguro", en:"I'm sure."},
+  {id:119, unit:"2.3", es:"Espero que sí", en:"I hope so."},
+  {id:120, unit:"2.3", es:"Nos vemos mañana", en:"See you tomorrow."},
+
+  // 3.1 (121-145)
+  {id:121, unit:"3.1", es:"¿Cuál es mi horario?", en:"What is my schedule?"},
+  {id:122, unit:"3.1", es:"Entro a las 9", en:"I start at 9."},
+  {id:123, unit:"3.1", es:"Salgo a las 5", en:"I finish at 5."},
+  {id:124, unit:"3.1", es:"Estoy en break", en:"I'm on break."},
+  {id:125, unit:"3.1", es:"Ya terminé", en:"I'm done."},
+  {id:126, unit:"3.1", es:"No he terminado", en:"I'm not finished."},
+  {id:127, unit:"3.1", es:"Necesito más tiempo", en:"I need more time."},
+  {id:128, unit:"3.1", es:"No tengo acceso", en:"I don't have access."},
+  {id:129, unit:"3.1", es:"No funciona", en:"It doesn't work."},
+  {id:130, unit:"3.1", es:"Hay un problema", en:"There is a problem."},
+  {id:131, unit:"3.1", es:"Fue un error", en:"It was a mistake."},
+  {id:132, unit:"3.1", es:"Lo arreglo", en:"I'll fix it."},
+  {id:133, unit:"3.1", es:"¿Puede explicarlo otra vez?", en:"Can you explain it again?"},
+  {id:134, unit:"3.1", es:"No entendí", en:"I didn't understand."},
+  {id:135, unit:"3.1", es:"¿Qué hago ahora?", en:"What do I do now?"},
+  {id:136, unit:"3.1", es:"Estoy aprendiendo", en:"I'm learning."},
+  {id:137, unit:"3.1", es:"Soy nuevo", en:"I'm new."},
+  {id:138, unit:"3.1", es:"Necesito ayuda", en:"I need help."},
+  {id:139, unit:"3.1", es:"¿Está bien así?", en:"Is this okay?"},
+  {id:140, unit:"3.1", es:"Está listo", en:"It's ready."},
+  {id:141, unit:"3.1", es:"Falta esto", en:"This is missing."},
+  {id:142, unit:"3.1", es:"Está completo", en:"It's complete."},
+  {id:143, unit:"3.1", es:"Estoy trabajando en eso", en:"I'm working on it."},
+  {id:144, unit:"3.1", es:"Dame un momento", en:"Give me a moment."},
+  {id:145, unit:"3.1", es:"Gracias por la paciencia", en:"Thanks for your patience."},
+
+  // 3.2 (146-170)
+  {id:146, unit:"3.2", es:"No hay problema", en:"No problem."},
+  {id:147, unit:"3.2", es:"Sí hay problema", en:"There is a problem."},
+  {id:148, unit:"3.2", es:"Necesito arreglar esto", en:"I need to fix this."},
+  {id:149, unit:"3.2", es:"No es correcto", en:"It's not correct."},
+  {id:150, unit:"3.2", es:"Es correcto", en:"It's correct."},
+  {id:151, unit:"3.2", es:"Está roto", en:"It's broken."},
+  {id:152, unit:"3.2", es:"No está listo", en:"It's not ready."},
+  {id:153, unit:"3.2", es:"Está tarde", en:"It's late."},
+  {id:154, unit:"3.2", es:"Está temprano", en:"It's early."},
+  {id:155, unit:"3.2", es:"Se perdió", en:"It got lost."},
+  {id:156, unit:"3.2", es:"Lo encontré", en:"I found it."},
+  {id:157, unit:"3.2", es:"No es mío", en:"It's not mine."},
+  {id:158, unit:"3.2", es:"Es mío", en:"It's mine."},
+  {id:159, unit:"3.2", es:"Es tuyo", en:"It's yours."},
+  {id:160, unit:"3.2", es:"Está vacío", en:"It's empty."},
+  {id:161, unit:"3.2", es:"Está lleno", en:"It's full."},
+  {id:162, unit:"3.2", es:"Necesito reemplazo", en:"I need a replacement."},
+  {id:163, unit:"3.2", es:"Necesito un reembolso", en:"I need a refund."},
+  {id:164, unit:"3.2", es:"No estoy de acuerdo", en:"I don't agree."},
+  {id:165, unit:"3.2", es:"Estoy de acuerdo", en:"I agree."},
+  {id:166, unit:"3.2", es:"No es justo", en:"It's not fair."},
+  {id:167, unit:"3.2", es:"Es justo", en:"It's fair."},
+  {id:168, unit:"3.2", es:"Hablemos", en:"Let's talk."},
+  {id:169, unit:"3.2", es:"Vamos a arreglarlo", en:"Let's fix it."},
+  {id:170, unit:"3.2", es:"Gracias por entender", en:"Thanks for understanding."},
+
+  // 4.1 (171-190)
+  {id:171, unit:"4.1", es:"Claro", en:"Sure."},
+  {id:172, unit:"4.1", es:"Tal vez", en:"Maybe."},
+  {id:173, unit:"4.1", es:"No realmente", en:"Not really."},
+  {id:174, unit:"4.1", es:"Supongo", en:"I guess."},
+  {id:175, unit:"4.1", es:"Dame un segundo", en:"Give me a second."},
+  {id:176, unit:"4.1", es:"Tiene sentido", en:"That makes sense."},
+  {id:177, unit:"4.1", es:"No importa", en:"It doesn't matter."},
+  {id:178, unit:"4.1", es:"Está bien", en:"That's fine."},
+  {id:179, unit:"4.1", es:"Depende", en:"It depends."},
+  {id:180, unit:"4.1", es:"Así es", en:"That's right."},
+  {id:181, unit:"4.1", es:"Exacto", en:"Exactly."},
+  {id:182, unit:"4.1", es:"Más o menos", en:"Kind of."},
+  {id:183, unit:"4.1", es:"Casi", en:"Almost."},
+  {id:184, unit:"4.1", es:"No estoy seguro", en:"I'm not sure."},
+  {id:185, unit:"4.1", es:"Déjame pensar", en:"Let me think."},
+  {id:186, unit:"4.1", es:"En serio", en:"Seriously."},
+  {id:187, unit:"4.1", es:"Sin problema", en:"No worries."},
+  {id:188, unit:"4.1", es:"Está bien para mí", en:"It's okay with me."},
+  {id:189, unit:"4.1", es:"De acuerdo", en:"Alright."},
+  {id:190, unit:"4.1", es:"Como quieras", en:"Up to you."},
+
+  // 4.2 (191-210)
+  {id:191, unit:"4.2", es:"Voy a ir", en:"I'm gonna go."},
+  {id:192, unit:"4.2", es:"Quiero hacer", en:"I wanna do it."},
+  {id:193, unit:"4.2", es:"Más o menos", en:"Kinda."},
+  {id:194, unit:"4.2", es:"Un poco", en:"A little bit."},
+  {id:195, unit:"4.2", es:"Ahora mismo", en:"Right now."},
+  {id:196, unit:"4.2", es:"En este momento", en:"At the moment."},
+  {id:197, unit:"4.2", es:"Estoy ocupado ahora", en:"I'm busy right now."},
+  {id:198, unit:"4.2", es:"Te aviso luego", en:"I'll let you know later."},
+  {id:199, unit:"4.2", es:"Estoy de camino", en:"I'm on my way."},
+  {id:200, unit:"4.2", es:"Ya casi", en:"Almost there."},
+  {id:201, unit:"4.2", es:"Dame chance", en:"Give me a chance."},
+  {id:202, unit:"4.2", es:"No pasa nada", en:"It's all good."},
+  {id:203, unit:"4.2", es:"Me equivoqué", en:"I messed up."},
+  {id:204, unit:"4.2", es:"Fue mi culpa", en:"It's my fault."},
+  {id:205, unit:"4.2", es:"Todo bien", en:"All good."},
+  {id:206, unit:"4.2", es:"Estoy bien", en:"I'm good."},
+  {id:207, unit:"4.2", es:"No estoy bien", en:"I'm not okay."},
+  {id:208, unit:"4.2", es:"Estoy cansado", en:"I'm worn out."},
+  {id:209, unit:"4.2", es:"Necesito descanso", en:"I need a break."},
+  {id:210, unit:"4.2", es:"Hablamos luego", en:"We'll talk later."},
+];
+
+const tutors = [
+  {name:"Ana", emoji:"👩‍🏫", esLang:"es-ES", enLang:"en-US", pitchES:1.05, rateES:0.97, pitchEN:1.05, rateEN:0.92,
+   style:"Corrección clara en español: qué faltó y cómo se dice natural."},
+  {name:"Mike", emoji:"👨‍🏫", esLang:"es-ES", enLang:"en-US", pitchES:0.98, rateES:0.95, pitchEN:0.92, rateEN:0.92,
+   style:"Pronunciación USA: escucha y repite."},
+  {name:"Alex", emoji:"🧑‍🏫", esLang:"es-ES", enLang:"en-US", pitchES:1.00, rateES:0.98, pitchEN:1.00, rateEN:0.98,
+   style:"Fluidez: rápido y natural, sin drama."},
+];
+
+/* =========================
+   Estado y Persistencia
+   ========================= */
+const KEY = "englishTutorCourse_v1";
+let state = loadState() || {
+  tutorIndex: 0,
+  idx: 0,         // 0..209
+  xp: 0,
+  streak: 0,
+  completed: {},  // lessonId:true
+  lastWasCorrect: false,
+  hintShown: false,
+};
+
+let chosenTokens = [];
+
+function saveState(){ localStorage.setItem(KEY, JSON.stringify(state)); }
+function loadState(){
+  try { return JSON.parse(localStorage.getItem(KEY)); } catch { return null; }
+}
+function resetProgress(){
+  stopVoice();
+  localStorage.removeItem(KEY);
+  state = {tutorIndex:0, idx:0, xp:0, streak:0, completed:{}, lastWasCorrect:false, hintShown:false};
+  chosenTokens = [];
+  renderUnits();
+  renderLesson();
+}
+
+/* =========================
+   Utilidades
+   ========================= */
+const $ = (id)=>document.getElementById(id);
+const norm = (s)=> (s||"").toLowerCase().trim().replace(/[’]/g,"'").replace(/\s+/g," ");
+function speak(text, lang, pitch=1.0, rate=1.0){
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = lang; u.pitch = pitch; u.rate = rate;
+  speechSynthesis.cancel();
+  speechSynthesis.speak(u);
+}
+function stopVoice(){ speechSynthesis.cancel(); }
+
+function tokensFromEnglish(en){
+  // separa tokens conservando ? ! . ,
+  const cleaned = en.replace(/\s+/g," ").trim();
+  const parts = cleaned.split(" ");
+  return parts.map(p=>p.trim()).filter(Boolean);
+}
+
+function unitForLessonId(id){
+  return UNITS.find(u=>id>=u.range[0] && id<=u.range[1])?.id || "—";
+}
+
+function levelFromXP(xp){
+  return 1 + Math.floor(xp / 60);
+}
+
+function progressPct(){
+  const doneCount = Object.keys(state.completed).length;
+  return Math.round((doneCount / LESSONS.length) * 100);
+}
+
+/* =========================
+   UI: Units Sidebar
+   ========================= */
+function renderUnits(){
+  const root = $("units");
+  root.innerHTML = "";
+  UNITS.forEach(u=>{
+    const doneInUnit = LESSONS.filter(L=>L.unit===u.id && state.completed[L.id]).length;
+    const totalInUnit = LESSONS.filter(L=>L.unit===u.id).length;
+
+    const box = document.createElement("div");
+    box.className = "unit";
+    box.innerHTML = `
+      <p class="unitTitle">${u.name}</p>
+      <p class="unitDesc">${u.desc}</p>
+      <div class="small" style="margin-top:6px">Progreso: ${doneInUnit}/${totalInUnit}</div>
+      <div class="unitBtnRow">
+        <button class="tinyBtn" type="button">Ir a unidad</button>
+        <span class="chip">${u.id}</span>
+      </div>
+    `;
+    box.querySelector("button").onclick = ()=>{
+      // salta a primera lección de esa unidad
+      const first = LESSONS.findIndex(L=>L.unit===u.id);
+      if(first >= 0){
+        state.idx = first;
+        state.lastWasCorrect = false;
+        state.hintShown = false;
+        chosenTokens = [];
+        saveState();
+        renderLesson();
       }
-    ]
-  };
+    };
+    root.appendChild(box);
+  });
+}
 
-  // --------- State ----------
-  let tutorIndex = 0;
-  let i = 0;
-  let xp = 0;
-  let streak = 0;
-  let helpShown = false;
+function jumpToFirstIncomplete(){
+  const firstIncomplete = LESSONS.findIndex(L=>!state.completed[L.id]);
+  state.idx = firstIncomplete >= 0 ? firstIncomplete : (LESSONS.length-1);
+  state.lastWasCorrect = false;
+  state.hintShown = false;
+  chosenTokens = [];
+  saveState();
+  renderLesson();
+}
 
-  // --------- Helpers ----------
-  const $ = (id)=>document.getElementById(id);
-  const norm = (s)=> (s||"").toLowerCase().trim().replace(/[’]/g,"'").replace(/\s+/g," ");
+/* =========================
+   Tutores
+   ========================= */
+function setTutor(n){
+  state.tutorIndex = n;
+  ["t0","t1","t2"].forEach((id,i)=>$(id).classList.toggle("active", i===n));
+  saveState();
+  renderLesson(); // actualiza estilo y pista
+}
 
-  function speak(text, lang, pitch=1.0, rate=1.0){
-    const u = new SpeechSynthesisUtterance(text);
-    u.lang = lang; u.pitch = pitch; u.rate = rate;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
-  }
-  function stopVoice(){ speechSynthesis.cancel(); }
+/* =========================
+   Lección (Main)
+   ========================= */
+function renderLesson(){
+  renderUnits();
 
-  function setTutor(n){
-    tutorIndex = n;
-    ["t0","t1","t2"].forEach((id,idx)=>$(id).classList.toggle("active", idx===n));
-    render();
-  }
+  const L = LESSONS[state.idx];
+  const T = tutors[state.tutorIndex];
 
-  function updateStats(){
-    $("xp").innerText = xp;
-    $("streak").innerText = streak;
-    const lvl = 1 + Math.floor(xp/40);
-    $("lvl").innerText = `Nivel ${lvl}`;
+  // Sidebar stats
+  $("statLesson").innerText = `${L.id}/${LESSONS.length}`;
+  $("statUnit").innerText = `Unidad ${L.unit}`;
+  $("statXP").innerText = state.xp;
+  $("statLevel").innerText = `Nivel ${levelFromXP(state.xp)}`;
+  $("statStreak").innerText = state.streak;
 
-    $("step").innerText = (i+1);
-    $("unit").innerText = unit.name;
+  const pct = progressPct();
+  $("pct").innerText = `${pct}%`;
+  $("fill").style.width = `${pct}%`;
 
-    const pct = Math.round(((i) / unit.lessons.length) * 100);
-    $("progressText").innerText = `Progreso: ${pct}%`;
-    $("fill").style.width = pct + "%";
-  }
+  // Meta main
+  $("lessonMeta").innerText = `Unidad ${L.unit} · Lección ${L.id}`;
+  $("lessonTitle").innerText = `${L.es}`;
+  $("lessonSub").innerText = `${T.emoji} Tutor ${T.name}: ${T.style}`;
+  $("scene").innerText = `Traduce al inglés (vida real). Puedes escribir o armar con palabras.`;
 
-  function exerciseLabel(type){
-    if(type==="TYPE_TRANSLATION") return "Traducción (ES→EN)";
-    if(type==="MULTIPLE_CHOICE") return "Opción múltiple";
-    if(type==="ORDER_WORDS") return "Ordena palabras";
-    if(type==="GUIDED_CHAT") return "Conversación guiada";
-    return "Ejercicio";
-  }
+  // ES prompt (no mostramos EN)
+  $("esText").innerText = `¿Cómo se dice en inglés?: “${L.es}”`;
+  $("hint").innerText = state.hintShown ? buildHint(L) : "💡 Pista oculta (toca “Pista”)";
 
-  function render(){
-    helpShown = false;
-    $("fb").className = "feedback";
-    $("fb").innerText = "";
+  // Inputs
+  $("typed").value = "";
+  chosenTokens = [];
+  renderWordBank(L);
 
-    const L = unit.lessons[i];
-    $("lessonTitle").innerText = `${L.title}`;
-    $("lessonSub").innerText = `Tutor: ${tutors[tutorIndex].name} · ${unit.name}`;
-    $("exerciseTag").innerText = exerciseLabel(L.type);
+  // Feedback
+  $("fb").className = "feedback";
+  $("fb").innerText = "";
 
-    $("scene").innerText = L.scene;
-    $("esText").innerText = L.es;
+  // Next lock
+  const mustBeCorrect = !state.lastWasCorrect;
+  $("nextLockChip").innerText = mustBeCorrect ? "🔒 Debes acertar para pasar" : "✅ Puedes pasar";
+  $("nextBtn").disabled = mustBeCorrect;
+  $("nextBtn").classList.toggle("lock", mustBeCorrect);
 
-    // En apps reales NO se muestra siempre la respuesta.
-    // Aquí se muestra “objetivo” como referencia (tipo Duolingo: puedes ocultarlo si quieres).
-    $("enText").innerText = (tutorIndex===1) ? "Escucha primero y escribe." : "Objetivo: " + L.en;
+  // tutor buttons active state
+  ["t0","t1","t2"].forEach((id,i)=>$(id).classList.toggle("active", i===state.tutorIndex));
+}
 
-    $("meaning").innerText = "📌 " + L.meaning;
-    $("hint").innerText = helpShown ? ("💡 " + L.hint) : "💡 Pista oculta (toca “Ver pista”).";
+function renderWordBank(L){
+  const bank = $("bank");
+  bank.innerHTML = "";
+  const toks = tokensFromEnglish(L.en);
+  toks.forEach(tok=>{
+    const b = document.createElement("button");
+    b.type = "button";
+    b.className = "tok";
+    b.innerText = tok;
+    b.onclick = ()=>{
+      chosenTokens.push(tok);
+      $("builtText").innerText = chosenTokens.join(" ");
+      b.disabled = true;
+    };
+    bank.appendChild(b);
+  });
+  $("builtText").innerText = "";
+}
 
-    renderExercise(L);
-    updateStats();
-  }
+function resetWordBank(){
+  chosenTokens = [];
+  renderWordBank(LESSONS[state.idx]);
+}
 
-  function renderExercise(L){
-    const area = $("exerciseArea");
-    area.innerHTML = "";
+function copyBuiltToInput(){
+  const built = chosenTokens.join(" ").trim();
+  if(built) $("typed").value = built;
+}
 
-    if(L.type==="TYPE_TRANSLATION"){
-      const inp = document.createElement("input");
-      inp.id = "answer";
-      inp.placeholder = "Escribe en inglés (sin ver ayuda)…";
-      area.appendChild(inp);
-      return;
-    }
+/* =========================
+   Voz / Pistas
+   ========================= */
+function speakQuestion(){
+  const L = LESSONS[state.idx];
+  const T = tutors[state.tutorIndex];
+  speak(`¿Cómo se dice "${L.es}" en inglés?`, T.esLang, T.pitchES, T.rateES);
+}
+function speakAnswer(){
+  const L = LESSONS[state.idx];
+  const T = tutors[state.tutorIndex];
+  speak(L.en, T.enLang, T.pitchEN, T.rateEN);
+}
 
-    if(L.type==="MULTIPLE_CHOICE"){
-      const wrap = document.createElement("div");
-      wrap.className = "choices";
-      wrap.dataset.selected = "";
+function buildHint(L){
+  // Pista automática basada en tokens
+  const toks = tokensFromEnglish(L.en);
+  const start = toks[0] || "";
+  const end = toks[toks.length-1] || "";
+  return `💡 Empieza con “${start}” y termina con “${end}”.`;
+}
 
-      L.choices.forEach((c, idx)=>{
-        const btn = document.createElement("button");
-        btn.className = "choice";
-        btn.type = "button";
-        btn.innerText = c;
-        btn.onclick = ()=>{
-          wrap.dataset.selected = String(idx);
-          // Reset styles
-          [...wrap.querySelectorAll(".choice")].forEach(x=>x.classList.remove("correct","wrong"));
-        };
-        wrap.appendChild(btn);
-      });
+function showHint(){
+  state.hintShown = true;
+  saveState();
+  const L = LESSONS[state.idx];
+  $("hint").innerText = buildHint(L);
+  const T = tutors[state.tutorIndex];
+  speak("Pista. " + buildHint(L).replace("💡",""), T.esLang, T.pitchES, T.rateES);
+}
 
-      area.appendChild(wrap);
-      return;
-    }
+/* =========================
+   Corrección (Duro-humano)
+   ========================= */
+function check(){
+  const L = LESSONS[state.idx];
+  const T = tutors[state.tutorIndex];
 
-    if(L.type==="ORDER_WORDS"){
-      const p = document.createElement("p");
-      p.className = "small";
-      p.innerText = "Toca palabras en orden para formar la frase:";
-      area.appendChild(p);
+  const typed = $("typed").value.trim();
+  const built = chosenTokens.join(" ").trim();
+  const attempt = typed || built;
 
-      const bank = document.createElement("div");
-      bank.className = "choices";
-      bank.style.gridTemplateColumns = "1fr";
-
-      const built = document.createElement("div");
-      built.id = "built";
-      built.className = "prompt";
-      built.style.marginTop = "10px";
-      built.innerHTML = `<p class="label">Tu frase:</p><p class="en" id="builtText"></p>`;
-      area.appendChild(bank);
-      area.appendChild(built);
-
-      const chosen = [];
-      L.bank.forEach(tok=>{
-        const b = document.createElement("button");
-        b.className = "choice";
-        b.type = "button";
-        b.innerText = tok;
-        b.onclick = ()=>{
-          chosen.push(tok);
-          $("builtText").innerText = chosen.join(" ");
-          b.disabled = true;
-          b.style.opacity = .55;
-        };
-        bank.appendChild(b);
-      });
-
-      const reset = document.createElement("button");
-      reset.className = "btn secondary";
-      reset.style.marginTop = "10px";
-      reset.innerText = "↩️ Rehacer";
-      reset.onclick = ()=>render();
-      area.appendChild(reset);
-      return;
-    }
-
-    if(L.type==="GUIDED_CHAT"){
-      const box = document.createElement("div");
-      box.className = "prompt";
-      box.innerHTML = `<p class="label">Él/Ella dice:</p><p class="en">"${L.botEN}"</p><p class="label" style="margin-top:10px">Tú respondes:</p>`;
-      area.appendChild(box);
-
-      const wrap = document.createElement("div");
-      wrap.className = "choices";
-      wrap.dataset.selected = "";
-      L.options.forEach((c, idx)=>{
-        const btn = document.createElement("button");
-        btn.className = "choice";
-        btn.type = "button";
-        btn.innerText = c;
-        btn.onclick = ()=>{
-          wrap.dataset.selected = String(idx);
-          [...wrap.querySelectorAll(".choice")].forEach(x=>x.classList.remove("correct","wrong"));
-        };
-        wrap.appendChild(btn);
-      });
-      area.appendChild(wrap);
-      return;
-    }
+  if(!attempt){
+    fail("Responde escribiendo o armando la frase con palabras.");
+    speak("Responde primero.", T.esLang, T.pitchES, T.rateES);
+    return;
   }
 
-  function speakPrompt(){
-    const L = unit.lessons[i];
-    const T = tutors[tutorIndex];
-    const question = `¿Cómo se dice "${L.es}" en inglés?`;
-    speak(question, T.esLang, T.pitchES, T.rateES);
-  }
+  const user = norm(attempt);
+  const correct = norm(L.en);
 
-  function speakAnswer(){
-    const L = unit.lessons[i];
-    const T = tutors[tutorIndex];
-    speak(L.en, T.enLang, T.pitchEN, T.rateEN);
-  }
+  if(user === correct){
+    // Correcto: desbloquea next
+    const gain = state.hintShown ? 8 : 12;
+    state.xp += gain;
+    state.streak += 1;
+    state.completed[L.id] = true;
+    state.lastWasCorrect = true;
+    state.hintShown = false;
+    saveState();
 
-  function showHelp(){
-    helpShown = true;
-    const L = unit.lessons[i];
-    $("hint").innerText = "💡 " + L.hint;
-    speak("Pista. " + L.hint, tutors[tutorIndex].esLang, tutors[tutorIndex].pitchES, tutors[tutorIndex].rateES);
-  }
-
-  function win(msg){
-    const gain = helpShown ? 8 : 12;
-    xp += gain;
-    streak += 1;
     $("fb").className = "feedback ok";
-    $("fb").innerText = `✅ ${msg} (+${gain} XP)`;
-    speak("Correcto. Muy bien.", tutors[tutorIndex].esLang, tutors[tutorIndex].pitchES, tutors[tutorIndex].rateES);
-    updateStats();
+    $("fb").innerText = `✅ Correcto. (+${gain} XP)`;
+    speak("Correcto. Muy bien.", T.esLang, T.pitchES, T.rateES);
+
+    $("nextLockChip").innerText = "✅ Puedes pasar";
+    $("nextBtn").disabled = false;
+    $("nextBtn").classList.remove("lock");
+
+    // actualiza stats
+    renderUnits();
+    $("statXP").innerText = state.xp;
+    $("statStreak").innerText = state.streak;
+    $("statLevel").innerText = `Nivel ${levelFromXP(state.xp)}`;
+    const pct = progressPct();
+    $("pct").innerText = `${pct}%`;
+    $("fill").style.width = `${pct}%`;
+    return;
   }
 
-  function lose(msg){
-    streak = 0;
+  // Incorrecto: corrección humana en español (intención + faltantes)
+  state.streak = 0;
+  state.lastWasCorrect = false;
+  saveState();
+
+  const tip = coachTip(user, correct);
+  $("fb").className = "feedback bad";
+  $("fb").innerHTML = `❌ Te entendí, pero no está correcto.<br><br>
+    ✅ Correcto: <b>${L.en}</b><br>
+    🧑‍🏫 Tutor: ${tip}
+  `;
+  speak("No. Inténtalo otra vez.", T.esLang, T.pitchES, T.rateES);
+
+  $("nextLockChip").innerText = "🔒 Debes acertar para pasar";
+  $("nextBtn").disabled = true;
+  $("nextBtn").classList.add("lock");
+
+  // sube pista automática tras fallo
+  state.hintShown = true;
+  saveState();
+  $("hint").innerText = buildHint(L);
+
+  // actualiza stats streak
+  $("statStreak").innerText = state.streak;
+}
+
+function fail(msg){
+  $("fb").className = "feedback bad";
+  $("fb").innerText = `❌ ${msg}`;
+  state.streak = 0;
+  state.lastWasCorrect = false;
+  saveState();
+  $("statStreak").innerText = state.streak;
+  $("nextBtn").disabled = true;
+  $("nextBtn").classList.add("lock");
+  $("nextLockChip").innerText = "🔒 Debes acertar para pasar";
+}
+
+function coachTip(user, correct){
+  // Heurísticas simples y útiles (sin IA externa)
+  const uToks = user.replace(/[?.!]/g,"").split(" ").filter(Boolean);
+  const cToks = correct.replace(/[?.!]/g,"").split(" ").filter(Boolean);
+
+  const missing = cToks.filter(w => !uToks.includes(w));
+  const extra = uToks.filter(w => !cToks.includes(w));
+
+  // Errores típicos
+  if(correct.includes("don't") && user.includes("no ")) return "En inglés no se usa “no” así. Usa **don't** (do not).";
+  if(correct.includes("can't") && user.includes("no ")) return "En inglés no se usa “no” así. Usa **can't** (cannot).";
+  if(correct.includes("what's") && user.includes("whats")) return "Pon apóstrofe: **what's** (what is).";
+  if(correct.includes("i'm") && user.includes("im ")) return "Pon apóstrofe: **I'm** (I am).";
+
+  if(missing.length){
+    return `Te faltan palabras: <b>${missing.slice(0,6).join(", ")}</b>. Escríbelo completo.`;
+  }
+  if(extra.length){
+    return `Tienes palabras de más: <b>${extra.slice(0,6).join(", ")}</b>. Intenta más simple.`;
+  }
+
+  // Orden
+  const sameSet = cToks.every(w=>uToks.includes(w)) && uToks.every(w=>cToks.includes(w));
+  if(sameSet && user !== correct){
+    return "Tienes las palabras, pero el **orden** está mal. Usa el Word Bank para acomodarlo y luego escribe.";
+  }
+
+  return "Casi. Escucha el inglés (🔊) y copia la estructura exacta. Luego lo harás sin ayuda.";
+}
+
+/* =========================
+   Navegación
+   ========================= */
+function next(){
+  // Duro: no pasa si no acertó
+  if(!state.lastWasCorrect){
     $("fb").className = "feedback bad";
-    $("fb").innerText = `❌ ${msg}`;
-    speak("No. Inténtalo otra vez.", tutors[tutorIndex].esLang, tutors[tutorIndex].pitchES, tutors[tutorIndex].rateES);
-    updateStats();
+    $("fb").innerText = "🔒 No puedes pasar todavía. Primero acierta una vez.";
+    return;
   }
+  stopVoice();
+  state.idx = Math.min(state.idx + 1, LESSONS.length - 1);
+  state.lastWasCorrect = false;
+  state.hintShown = false;
+  chosenTokens = [];
+  saveState();
+  renderLesson();
+}
 
-  function check(){
-    const L = unit.lessons[i];
-
-    if(L.type==="TYPE_TRANSLATION"){
-      const val = norm(($("answer")||{}).value);
-      if(!val) return lose("Escribe tu respuesta en inglés.");
-      if(val === norm(L.en)) return win("Traducción perfecta.");
-      return lose("No coincide. Escucha el inglés y prueba de nuevo.");
-    }
-
-    if(L.type==="MULTIPLE_CHOICE"){
-      const wrap = $("exerciseArea").querySelector(".choices");
-      const sel = wrap?.dataset.selected ?? "";
-      if(sel==="") return lose("Elige una opción.");
-      const ok = Number(sel) === L.answerIndex;
-      const btns = [...wrap.querySelectorAll(".choice")];
-      btns.forEach((b, idx)=>{
-        if(idx === L.answerIndex) b.classList.add("correct");
-        if(idx === Number(sel) && !ok) b.classList.add("wrong");
-      });
-      return ok ? win("Excelente elección.") : lose("Esa no suena natural en inglés.");
-    }
-
-    if(L.type==="ORDER_WORDS"){
-      const built = (document.getElementById("builtText")?.innerText)||"";
-      if(!built.trim()) return lose("Forma la frase tocando las palabras.");
-      if(norm(built) === norm(L.en)) return win("Orden correcto.");
-      return lose("El orden está mal. Rehaz y prueba.");
-    }
-
-    if(L.type==="GUIDED_CHAT"){
-      const wrap = $("exerciseArea").querySelector(".choices");
-      const sel = wrap?.dataset.selected ?? "";
-      if(sel==="") return lose("Elige una respuesta.");
-      const ok = Number(sel) === L.answerIndex;
-      const btns = [...wrap.querySelectorAll(".choice")];
-      btns.forEach((b, idx)=>{
-        if(idx === L.answerIndex) b.classList.add("correct");
-        if(idx === Number(sel) && !ok) b.classList.add("wrong");
-      });
-      return ok ? win("Respuesta natural.") : lose("Eso suena raro en inglés. Elige la natural.");
-    }
-  }
-
-  function next(){
-    stopVoice();
-    helpShown = false;
-    $("hint").innerText = "💡 Pista oculta (toca “Ver pista”).";
-    $("fb").className = "feedback";
-    $("fb").innerText = "";
-
-    if(i < unit.lessons.length - 1){
-      i++;
-      render();
-    } else {
-      $("lessonTitle").innerText = "🎉 Unidad completada";
-      $("lessonSub").innerText = "Esto ya es una base tipo Duolingo (sin backend).";
-      $("exerciseTag").innerText = "Finish";
-      $("scene").innerText = "Siguiente paso real: agregar 50+ lecciones, audio por palabra y un modo conversación con API.";
-      $("esText").innerText = "¿Listo para la Unidad 2?";
-      $("enText").innerText = "You’re ready for Unit 2.";
-      $("meaning").innerText = "📌 Si quieres IA conversacional real (como tutor), ahí sí se integra API + backend. Sin mentiras.";
-      $("hint").innerText = "💡 Dime y te doy la arquitectura mínima y segura.";
-      $("exerciseArea").innerHTML = "";
-      updateStats();
-    }
-  }
-
-  function resetAll(){
-    stopVoice();
-    tutorIndex = 0; i = 0; xp = 0; streak = 0; helpShown = false;
-    ["t0","t1","t2"].forEach((id,idx)=>$(id).classList.toggle("active", idx===0));
-    render();
-  }
-
-  // Init
-  render();
+/* =========================
+   Init
+   ========================= */
+renderUnits();
+renderLesson();
 </script>
 </body>
 </html>
