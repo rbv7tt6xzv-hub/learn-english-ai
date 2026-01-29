@@ -2,75 +2,204 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <title>Learn English AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+  <title>Learn English AI</title>
   <style>
-    body {
-      margin: 0;
-      font-family: Arial, Helvetica, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
+    :root{
+      --bg:#0f172a;
+      --card:#1e293b;
+      --text:#ffffff;
+      --muted:#94a3b8;
+      --btn:#22c55e;
+      --btnText:#0b1220;
+      --stroke:rgba(255,255,255,.08);
     }
-
-    .card {
-      background: #1e293b;
-      padding: 30px;
-      border-radius: 14px;
-      max-width: 420px;
-      width: 90%;
-      text-align: center;
-      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    *{box-sizing:border-box}
+    body{
+      margin:0;
+      font-family: Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 50% 30%, #1b2a52 0%, var(--bg) 55%, #0b1020 100%);
+      color:var(--text);
+      min-height:100vh;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      padding:20px;
     }
-
-    h1 {
-      margin-bottom: 10px;
+    .container{width:100%; max-width:520px;}
+    .card{
+      background: rgba(30,41,59,.92);
+      border:1px solid var(--stroke);
+      border-radius:16px;
+      padding:26px;
+      box-shadow: 0 12px 40px rgba(0,0,0,.35);
     }
-
-    p {
-      color: #cbd5f5;
-      margin-bottom: 20px;
+    h1{margin:0 0 10px; font-size:34px; letter-spacing:.2px;}
+    p{margin:0; color:var(--muted); line-height:1.45;}
+    .btn{
+      margin-top:18px;
+      width:100%;
+      padding:14px 16px;
+      border:none;
+      border-radius:12px;
+      background:var(--btn);
+      color:var(--btnText);
+      font-size:18px;
+      font-weight:700;
+      cursor:pointer;
     }
-
-    <a href="lesson.html">
-  <button>Start lesson</button>
-</a>
-      padding: 14px 26px;
-      font-size: 16px;
-      border: none;
-      border-radius: 10px;
-      background: #22c55e;
-      color: #022c22;
-      font-weight: bold;
-      cursor: pointer;
+    .btn:active{transform:scale(.99)}
+    .row{display:flex; gap:10px; margin-top:14px;}
+    .smallBtn{
+      flex:1;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      background: rgba(15,23,42,.35);
+      color: #e2e8f0;
+      font-weight:700;
+      cursor:pointer;
     }
-
-    button:hover {
-      background: #16a34a;
+    .hidden{display:none}
+    .lesson{
+      margin-top:18px;
+      padding:16px;
+      border-radius:14px;
+      border:1px solid var(--stroke);
+      background: rgba(15,23,42,.35);
     }
+    .badge{
+      display:inline-block;
+      padding:6px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(0,0,0,.15);
+      color:#e2e8f0;
+      font-size:13px;
+      font-weight:700;
+    }
+    .q{
+      margin-top:10px;
+      font-size:20px;
+      font-weight:800;
+      color:#f8fafc;
+    }
+    .hint{margin-top:8px; font-size:14px; color:var(--muted)}
+    .input{
+      margin-top:12px;
+      width:100%;
+      padding:12px 12px;
+      border-radius:12px;
+      border:1px solid var(--stroke);
+      outline:none;
+      background: rgba(2,6,23,.4);
+      color:#fff;
+      font-size:16px;
+    }
+    .feedback{
+      margin-top:10px;
+      font-weight:800;
+    }
+    .ok{color:#22c55e}
+    .no{color:#f87171}
   </style>
 </head>
-
 <body>
-  <div class="card">
-    <h1>Learn English AI 🇺🇸</h1>
-    <p>Practice English with AI teachers</p>
+  <div class="container">
+    <div class="card" id="home">
+      <h1>Learn English AI 🇺🇸</h1>
+      <p>Practice English with AI teachers</p>
 
-    <button onclick="startLesson()">
-      Start lesson
-    </button>
+      <button class="btn" id="startBtn">Start lesson</button>
+
+      <div class="lesson hidden" id="lesson">
+        <span class="badge">Lesson 1 • Greetings</span>
+
+        <div class="q">Say this in English:</div>
+        <p class="hint"><b>Spanish:</b> “Hola, ¿cómo estás?”</p>
+
+        <input class="input" id="answer" placeholder="Type your answer here..." />
+
+        <div class="row">
+          <button class="smallBtn" id="checkBtn">Check</button>
+          <button class="smallBtn" id="nextBtn">Next</button>
+        </div>
+
+        <div class="feedback" id="feedback"></div>
+        <p class="hint" id="example" class="hint"></p>
+      </div>
+    </div>
   </div>
 
   <script>
-    function startLesson() {
-    <button onclick="window.location.href='lessons.html'">
-  Start lesson
-</button>
+    // Elements
+    const startBtn = document.getElementById("startBtn");
+    const lesson = document.getElementById("lesson");
+    const answer = document.getElementById("answer");
+    const checkBtn = document.getElementById("checkBtn");
+    const nextBtn = document.getElementById("nextBtn");
+    const feedback = document.getElementById("feedback");
+    const example = document.getElementById("example");
+
+    // Simple lesson questions
+    const items = [
+      { es: "Hola, ¿cómo estás?", good: ["hello, how are you", "hi, how are you"], sample: '✅ Example: "Hello, how are you?"' },
+      { es: "Me llamo Faustino", good: ["my name is faustino", "i'm faustino", "i am faustino"], sample: '✅ Example: "My name is Faustino."' },
+      { es: "Mucho gusto", good: ["nice to meet you", "pleased to meet you"], sample: '✅ Example: "Nice to meet you."' },
+      { es: "¿De dónde eres?", good: ["where are you from"], sample: '✅ Example: "Where are you from?"' },
+    ];
+
+    let idx = 0;
+
+    function showItem() {
+      const hintP = document.querySelector("#lesson .hint b").parentElement;
+      hintP.innerHTML = "<b>Spanish:</b> “" + items[idx].es + "”";
+      answer.value = "";
+      feedback.textContent = "";
+      example.textContent = "";
+      answer.focus();
     }
+
+    function normalize(s){
+      return (s || "")
+        .toLowerCase()
+        .replace(/[?.!,"']/g, "")
+        .replace(/\s+/g, " ")
+        .trim();
+    }
+
+    // Start
+    startBtn.addEventListener("click", () => {
+      lesson.classList.remove("hidden");
+      showItem();
+      // Scroll to lesson (mobile)
+      lesson.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+
+    // Check
+    checkBtn.addEventListener("click", () => {
+      const user = normalize(answer.value);
+      if (!user) {
+        feedback.textContent = "Type an answer first 🙂";
+        feedback.className = "feedback no";
+        return;
+      }
+      const ok = items[idx].good.some(g => user.includes(g));
+      if (ok) {
+        feedback.textContent = "Correct ✅";
+        feedback.className = "feedback ok";
+      } else {
+        feedback.textContent = "Not quite ❌";
+        feedback.className = "feedback no";
+        example.textContent = items[idx].sample;
+      }
+    });
+
+    // Next
+    nextBtn.addEventListener("click", () => {
+      idx = (idx + 1) % items.length;
+      showItem();
+    });
   </script>
 </body>
 </html>
