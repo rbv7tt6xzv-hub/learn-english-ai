@@ -1,127 +1,72 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta charset="UTF-8" />
   <title>Learn English AI</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
   <style>
-    body{margin:0;font-family:-apple-system,BlinkMacSystemFont,Segoe UI,Roboto,Arial;background:#071528;color:#fff}
-    .wrap{max-width:520px;margin:0 auto;padding:28px 18px;text-align:center}
-    h1{margin:40px 0 10px;font-size:38px;font-weight:800}
-    .sub{opacity:.85;margin-bottom:18px}
-    .card{background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.10);border-radius:18px;padding:22px;margin:14px 0}
-    .btn{display:inline-block;background:#23c55e;color:#04210f;border:none;border-radius:14px;padding:14px 22px;font-size:18px;font-weight:700;cursor:pointer}
-    .btn2{display:inline-block;background:transparent;color:#fff;border:1px solid rgba(255,255,255,.25);border-radius:14px;padding:12px 18px;font-size:16px;font-weight:700;cursor:pointer;margin:6px}
-    .row{display:flex;gap:10px;justify-content:center;flex-wrap:wrap}
-    .big{font-size:30px;font-weight:800;margin:0 0 10px}
-    .line{opacity:.9;margin:10px 0;font-size:18px}
-    .mini{opacity:.7;font-size:14px;margin-top:10px}
-    .hide{display:none}
-    .pill{display:inline-block;padding:6px 10px;border-radius:999px;background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.12);font-size:13px;opacity:.9}
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 14px;
+      max-width: 420px;
+      width: 90%;
+      text-align: center;
+      box-shadow: 0 10px 30px rgba(0,0,0,.4);
+    }
+
+    h1 {
+      margin-bottom: 10px;
+    }
+
+    p {
+      color: #cbd5f5;
+      margin-bottom: 20px;
+    }
+
+    button {
+      padding: 14px 26px;
+      font-size: 16px;
+      border: none;
+      border-radius: 10px;
+      background: #22c55e;
+      color: #022c22;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background: #16a34a;
+    }
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <h1>Learn English AI 🚀</h1>
-    <div class="sub"><span class="pill" id="progressPill">Progress: Lesson 1</span></div>
+  <div class="card">
+    <h1>Learn English AI 🇺🇸</h1>
+    <p>Practice English with AI teachers</p>
 
-    <!-- HOME -->
-    <div id="home" class="card">
-      <div class="sub" id="homeTitle">Lesson 1: Basic English</div>
-      <button
-  onclick="startLesson()"
-  style="
-    padding: 16px 24px;
-    font-size: 18px;
-    font-weight: bold;
-    border-radius: 12px;
-    border: none;
-    background: #22c55e;
-    color: #06210f;
-    cursor: pointer;
-  "
->
-  Start Learning
-</button>
-
-<script>
-  function startLesson() {
-    window.location.href = "lesson.html";
-  }
-</script>
-
-<script>
-  function startLesson() {
-    window.location.href = "lesson.html";
-  }
-</script>
-
-      <div style="height:16px"></div>
-      <div class="big">Hello 👋</div>
-      <div class="line">Hello = Hola</div>
-      <div class="line">How are you? = ¿Cómo estás?</div>
-      <div class="line">Thank you = Gracias</div>
-      <div class="mini">Tip: Tap “Start Learning” to open the lesson screen.</div>
-    </div>
-
-    <!-- LESSON SCREEN -->
-    <div id="lesson" class="card hide">
-      <div class="sub" id="lessonHeader">Lesson</div>
-      <div class="big" id="word">Hello 👋</div>
-      <div class="line" id="meaning">Hello = Hola</div>
-
-      <div class="row" style="margin-top:14px">
-        <button class="btn2" id="prevBtn">◀ Prev</button>
-        <button class="btn2" id="nextBtn">Next ▶</button>
-      </div>
-
-      <div class="row" style="margin-top:10px">
-        <button class="btn2" id="backBtn">🏠 Home</button>
-        <button class="btn2" id="resetBtn">♻ Reset progress</button>
-      </div>
-
-      <div class="mini" id="counter">1 / 3</div>
-    </div>
-
+    <button onclick="startLesson()">
+      Start lesson
+    </button>
   </div>
 
   <script>
-    // Lessons data
-    const lessons = [
-      {
-        title: "Lesson 1: Basic English",
-        items: [
-          { word: "Hello 👋", meaning: "Hello = Hola" },
-          { word: "How are you? 🙂", meaning: "How are you? = ¿Cómo estás?" },
-          { word: "Thank you 🙏", meaning: "Thank you = Gracias" }
-        ]
-      },
-      {
-        title: "Lesson 2: Restaurant",
-        items: [
-          { word: "Water 💧", meaning: "Water = Agua" },
-          { word: "Menu 📖", meaning: "Menu = Menú" },
-          { word: "Check, please 🧾", meaning: "Check, please = La cuenta, por favor" }
-        ]
-      },
-      {
-        title: "Lesson 3: Work",
-        items: [
-          { word: "Help 🧠", meaning: "Help = Ayuda" },
-          { word: "Meeting 📅", meaning: "Meeting = Reunión" },
-          { word: "I understand ✅", meaning: "I understand = Entiendo" }
-        ]
-      }
-    ];
-
-    // State + persistence
-    const STORAGE_KEY = "learnEnglishAI_progress";
-    let state = { lessonIndex: 0, itemIndex: 0 };
-
-    function loadState() {
-      try {
-        const raw = localStorage.getItem(STORAGE_KEY);
-        if (raw) state = JSON.parse(raw);
-      } catch (e) {}
+    function startLesson() {
+      alert("Lesson system coming next 🚀");
     }
-    function saveState
+  </script>
+</body>
+</html>
