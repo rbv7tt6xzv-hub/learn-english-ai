@@ -1,459 +1,557 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Learn English AI — Profesores</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>English Tutor AI — Real Practice</title>
   <style>
+    :root{
+      --bg:#0b1220; --card:#101b33; --card2:#0f172a;
+      --text:#e5e7eb; --muted:#94a3b8; --line:#22304f;
+      --green:#22c55e; --blue:#60a5fa; --yellow:#fbbf24; --red:#ef4444;
+      --radius:16px;
+    }
+    *{box-sizing:border-box}
     body{
-      margin:0; font-family: Arial, sans-serif; background:#0f172a; color:#fff;
-      display:flex; justify-content:center; align-items:center; min-height:100vh; padding:18px;
+      margin:0; background:linear-gradient(180deg,#070c16, #0b1220 35%, #070c16);
+      color:var(--text); font-family: ui-sans-serif, system-ui, -apple-system, Arial, sans-serif;
+      min-height:100vh; display:flex; justify-content:center; padding:18px;
     }
-    .app{width:100%; max-width:520px; background:#111c33; border:1px solid #22304f; border-radius:16px; padding:18px;
-      box-shadow:0 12px 30px rgba(0,0,0,.35);}
-    h1{margin:0 0 6px 0; font-size:22px;}
-    .sub{margin:0 0 12px 0; color:#a9b4cf; line-height:1.35;}
-    .top{
-      display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap; margin:10px 0 12px;
+    .app{width:100%; max-width:980px; display:grid; gap:14px; grid-template-columns: 1fr; }
+    @media (min-width: 880px){ .app{grid-template-columns: 360px 1fr;} }
+
+    .panel{
+      background:rgba(16,27,51,.85); border:1px solid var(--line);
+      border-radius:var(--radius); padding:14px;
+      box-shadow: 0 12px 30px rgba(0,0,0,.35);
+      backdrop-filter: blur(8px);
     }
-    .chip{
-      display:inline-flex; gap:8px; align-items:center;
-      background:#0b1220; border:1px solid #2b3a5a; color:#cbd5e1;
-      padding:8px 10px; border-radius:999px; font-size:13px;
+    .brand{display:flex; align-items:center; justify-content:space-between; gap:10px;}
+    .brand h1{margin:0; font-size:18px; letter-spacing:.2px}
+    .tag{font-size:12px; color:var(--muted); border:1px solid var(--line); padding:6px 10px; border-radius:999px; background:#0b1220;}
+    .stats{margin-top:12px; display:grid; gap:10px;}
+    .stat{
+      background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:12px;
+      display:flex; justify-content:space-between; align-items:center;
     }
-    .stats{color:#cbd5e1; font-size:13px; line-height:1.35;}
-    .card{
-      background:#0b1220; border:1px solid #2b3a5a; border-radius:14px; padding:14px; margin-top:10px;
+    .stat .k{color:var(--muted); font-size:12px}
+    .stat .v{font-weight:800}
+    .progress{
+      margin-top:12px; background:var(--card2); border:1px solid var(--line); border-radius:14px; padding:12px;
     }
-    .story{color:#a9b4cf; margin:0 0 10px 0; line-height:1.35;}
-    .titleRow{display:flex; justify-content:space-between; gap:10px; flex-wrap:wrap;}
-    .lessonTitle{font-weight:800; margin:0; font-size:16px;}
-    .mode{color:#94a3b8; font-size:12px; margin:2px 0 0 0;}
+    .bar{height:10px; border-radius:999px; background:#0b1220; border:1px solid var(--line); overflow:hidden}
+    .fill{height:100%; width:0%; background:var(--green)}
+    .small{color:var(--muted); font-size:12px; line-height:1.35}
+
+    /* Main */
+    .header{display:flex; justify-content:space-between; align-items:flex-start; gap:10px; flex-wrap:wrap;}
+    .header .title{margin:0; font-size:18px}
+    .header .sub{margin:4px 0 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .tutors{display:flex; gap:8px; flex-wrap:wrap; margin-top:10px}
+    .tutorBtn{
+      border:1px solid var(--line); background:#0b1220; color:var(--text);
+      padding:10px 10px; border-radius:14px; cursor:pointer; min-width:170px;
+      display:flex; justify-content:space-between; align-items:center; gap:8px;
+    }
+    .tutorBtn.active{border-color: rgba(34,197,94,.7); box-shadow: 0 0 0 3px rgba(34,197,94,.15);}
+    .tutorName{font-weight:800; font-size:13px}
+    .tutorRole{color:var(--muted); font-size:12px}
+    .pill{font-size:11px; color:var(--muted); border:1px solid var(--line); padding:4px 8px; border-radius:999px}
+
+    .lesson{
+      margin-top:12px; background:var(--card2); border:1px solid var(--line); border-radius:var(--radius); padding:14px;
+    }
+    .scene{color:var(--muted); font-size:13px; line-height:1.35}
     .prompt{
-      margin-top:12px; padding:12px; border-radius:12px;
-      background:#111a2e; border:1px solid #25385e;
+      margin-top:10px; background:#0b1220; border:1px solid var(--line);
+      border-radius:14px; padding:12px;
     }
-    .label{color:#94a3b8; font-size:12px; margin:0 0 6px 0;}
-    .es{font-size:18px; font-weight:800; margin:0;}
-    .en{margin:8px 0 0 0; color:#e5e7eb; font-size:15px;}
-    .meaning{margin:8px 0 0 0; color:#cbd5e1; font-size:14px; line-height:1.35;}
-    .words{
-      margin-top:10px; display:flex; flex-wrap:wrap; gap:8px;
+    .label{color:var(--muted); font-size:12px; margin:0 0 6px}
+    .es{margin:0; font-size:18px; font-weight:900}
+    .en{margin:8px 0 0; font-size:16px; font-weight:800; color:#dbeafe}
+    .hint{margin:8px 0 0; color:var(--muted); font-size:13px; line-height:1.35}
+    .meaning{margin:8px 0 0; color:#cbd5e1; font-size:13px; line-height:1.35}
+
+    .actions{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px}
+    .btn{
+      flex:1; min-width:170px;
+      border:none; border-radius:14px; padding:12px 12px; font-weight:900; font-size:14px;
+      cursor:pointer;
     }
-    .w{
-      background:#0b1220; border:1px solid #2b3a5a; border-radius:999px;
-      padding:6px 10px; font-size:12px; color:#dbeafe;
+    .btn.primary{background:var(--green); color:#05210f}
+    .btn.secondary{background:#334155; color:#e2e8f0}
+    .btn.warn{background:var(--yellow); color:#1f1300}
+    .btn.danger{background:var(--red); color:white}
+    input, textarea{
+      width:100%; margin-top:10px; background:#0b1220; color:var(--text);
+      border:1px solid var(--line); border-radius:14px; padding:12px; font-size:16px;
+      outline:none;
     }
-    .row{display:flex; gap:10px; flex-wrap:wrap; margin-top:12px;}
-    button{
-      flex:1; min-width:160px;
-      padding:12px 12px; border-radius:12px; border:none;
-      background:#22c55e; color:#04130a; font-weight:800; font-size:14px;
-    }
-    button.secondary{background:#334155; color:#e2e8f0;}
-    button.danger{background:#ef4444; color:#fff;}
-    input{
-      width:100%; margin-top:12px; padding:12px; border-radius:12px;
-      border:1px solid #2b3a5a; background:#0b1220; color:#fff; font-size:16px; outline:none;
-    }
-    .choices{margin-top:10px; display:flex; flex-direction:column; gap:10px;}
+    .choices{display:grid; gap:10px; margin-top:10px}
     .choice{
-      text-align:left; padding:12px; border-radius:12px;
-      border:1px solid #2b3a5a; background:#0b1220; color:#e2e8f0; font-weight:700;
+      text-align:left; padding:12px; border-radius:14px; border:1px solid var(--line);
+      background:#0b1220; color:var(--text); cursor:pointer; font-weight:800;
     }
-    .choice:hover{filter:brightness(1.07);}
-    .bank{display:flex; flex-wrap:wrap; gap:8px; margin-top:10px;}
-    .token{
-      padding:8px 10px; border-radius:999px; border:1px solid #2b3a5a;
-      background:#0b1220; color:#fff; font-weight:700; font-size:13px;
+    .choice.correct{border-color: rgba(34,197,94,.7)}
+    .choice.wrong{border-color: rgba(239,68,68,.7)}
+    .feedback{
+      margin-top:12px; font-weight:900; line-height:1.35;
     }
-    .built{
-      margin-top:10px; padding:10px; border-radius:12px; border:1px dashed #2b3a5a;
-      min-height:44px; color:#cbd5e1;
-    }
-    .feedback{margin-top:12px; font-weight:800; line-height:1.35;}
-    .small{color:#a9b4cf; font-size:12px; margin-top:6px; line-height:1.35;}
-    .hr{height:1px; background:#22304f; margin:14px 0;}
+    .feedback.ok{color:#86efac}
+    .feedback.bad{color:#fca5a5}
+    .divider{height:1px; background:var(--line); margin:12px 0}
   </style>
 </head>
 <body>
   <div class="app">
-    <h1>Learn English AI 🇺🇸</h1>
-    <p class="sub">Profesores con voz + significado en español + ejercicios reales (sin backend).</p>
+    <!-- Left panel -->
+    <div class="panel">
+      <div class="brand">
+        <h1>English Tutor AI 🇺🇸</h1>
+        <span class="tag" id="modeTag">Survival</span>
+      </div>
+      <p class="small" style="margin:8px 0 0">
+        Aprende inglés real: escucha, traduce, responde y practica conversación.
+        <br/>Honesto: sin backend = no “chatGPT dentro”, pero sí entrenamiento real.
+      </p>
 
-    <div class="top">
-      <div class="chip" id="teacherChip">🧑‍🏫 Teacher</div>
       <div class="stats">
-        <div id="progressTxt">Lección 1/1</div>
-        <div id="scoreTxt">Puntos: 0 | Nivel: 1</div>
+        <div class="stat"><div><div class="k">XP</div><div class="v" id="xp">0</div></div><div class="pill" id="lvl">Nivel 1</div></div>
+        <div class="stat"><div><div class="k">Racha</div><div class="v" id="streak">0</div></div><div class="pill">🔥</div></div>
+        <div class="stat"><div><div class="k">Lección</div><div class="v" id="step">1</div></div><div class="pill" id="unit">Unidad 1</div></div>
+      </div>
+
+      <div class="progress">
+        <div class="small" id="progressText">Progreso: 0%</div>
+        <div class="bar" style="margin-top:8px"><div class="fill" id="fill"></div></div>
+      </div>
+
+      <div class="divider"></div>
+
+      <div class="small">
+        ✅ Voz ES/EN usando tu teléfono (SpeechSynthesis).<br/>
+        🎤 Reconocimiento de voz depende del navegador (si no funciona, se usa escritura).<br/>
+        Si no se oye: sube volumen y quita silencio.
+      </div>
+
+      <div class="actions" style="margin-top:12px">
+        <button class="btn secondary" onclick="resetAll()">🔁 Reiniciar</button>
+        <button class="btn danger" onclick="stopVoice()">🔇 Parar voz</button>
       </div>
     </div>
 
-    <div class="card">
-      <div class="titleRow">
+    <!-- Main panel -->
+    <div class="panel">
+      <div class="header">
         <div>
-          <p class="lessonTitle" id="lessonTitle">Cargando…</p>
-          <p class="mode" id="modeTxt">Modo</p>
+          <p class="title" id="lessonTitle">Cargando…</p>
+          <p class="sub" id="lessonSub">…</p>
         </div>
-        <div class="chip" id="goalChip">🎯 Meta</div>
+        <div class="pill" id="exerciseTag">Exercise</div>
       </div>
 
-      <p class="story" id="storyTxt">…</p>
-
-      <div class="prompt">
-        <p class="label">Español (lo que quieres decir):</p>
-        <p class="es" id="spanishTxt">…</p>
-
-        <p class="label" style="margin-top:10px;">Inglés (frase correcta):</p>
-        <p class="en" id="englishTxt">…</p>
-
-        <p class="label" style="margin-top:10px;">Significado / explicación en español:</p>
-        <p class="meaning" id="meaningTxt">…</p>
-
-        <div class="words" id="wordsBox"></div>
+      <div class="tutors">
+        <button class="tutorBtn active" id="t0" onclick="setTutor(0)">
+          <div>
+            <div class="tutorName">👩‍🏫 Ana</div>
+            <div class="tutorRole">Explica en español</div>
+          </div>
+          <span class="pill">ES → EN</span>
+        </button>
+        <button class="tutorBtn" id="t1" onclick="setTutor(1)">
+          <div>
+            <div class="tutorName">👨‍🏫 Mike</div>
+            <div class="tutorRole">Pronunciación</div>
+          </div>
+          <span class="pill">EN audio</span>
+        </button>
+        <button class="tutorBtn" id="t2" onclick="setTutor(2)">
+          <div>
+            <div class="tutorName">🧑‍🏫 Alex</div>
+            <div class="tutorRole">Conversación</div>
+          </div>
+          <span class="pill">Chat guiado</span>
+        </button>
       </div>
 
-      <!-- area dinámica por tipo de ejercicio -->
-      <div id="exerciseArea"></div>
+      <div class="lesson">
+        <p class="scene" id="scene">…</p>
 
-      <div class="row">
-        <button onclick="speak()">🔊 Escuchar (profesor)</button>
-        <button class="secondary" onclick="showHint()">💡 Pista</button>
-      </div>
+        <div class="prompt">
+          <p class="label" id="labelES">Español:</p>
+          <p class="es" id="esText">…</p>
 
-      <div class="row">
-        <button onclick="check()">✅ Revisar</button>
-        <button class="secondary" onclick="next()">➡️ Siguiente</button>
-      </div>
+          <p class="label" id="labelEN" style="margin-top:12px">Inglés (objetivo):</p>
+          <p class="en" id="enText">…</p>
 
-      <div class="feedback" id="feedback"></div>
-      <div class="small" id="hintLine"></div>
+          <p class="meaning" id="meaning">…</p>
+          <p class="hint" id="hint">…</p>
+        </div>
 
-      <div class="hr"></div>
+        <div id="exerciseArea"></div>
 
-      <div class="row">
-        <button class="secondary" onclick="resetProgress()">🔁 Reiniciar</button>
-        <button class="danger" onclick="mute()">🔇 Parar voz</button>
-      </div>
+        <div class="actions">
+          <button class="btn warn" onclick="speakPrompt()">🔊 Tutor pregunta (ES)</button>
+          <button class="btn secondary" onclick="speakAnswer()">🔊 Escuchar inglés (EN)</button>
+          <button class="btn secondary" onclick="showHelp()">💡 Ver pista</button>
+        </div>
 
-      <div class="small">
-        Nota iPhone: sube volumen y quita silencio. La voz solo funciona después de tocar un botón.
+        <div class="actions">
+          <button class="btn primary" onclick="check()">✅ Revisar</button>
+          <button class="btn secondary" onclick="next()">➡️ Siguiente</button>
+        </div>
+
+        <div class="feedback" id="fb"></div>
       </div>
     </div>
   </div>
 
 <script>
-  // ✅ Lecciones con: frase EN, español, significado, vocabulario, y tipo de ejercicio
-  const lessons = [
-    {
-      title: "Supervivencia: Conocer a alguien",
-      teacher: { name:"Teacher Anna", emoji:"👩‍🏫", lang:"en-US", pitch:1.15, rate:0.95 },
-      story: "Llegas a EE.UU. y alguien te sonríe. Te hace una pregunta súper común.",
-      goal: "Presentarte y responder",
-      es: "¿De dónde eres?",
-      en: "Where are you from?",
-      meaning: "Se usa para preguntar tu país o ciudad. Literal: “¿De dónde vienes?”",
-      vocab: [
-        ["Where", "dónde"],
-        ["are", "eres/estás"],
-        ["you", "tú/usted"],
-        ["from", "de (origen)"]
-      ],
-      type: "LISTEN_TYPE",
-      hint: "Empieza con “Where…” y termina con “from”."
-    },
-    {
-      title: "Café: ordenar algo",
-      teacher: { name:"Teacher Mike", emoji:"👨‍🏫", lang:"en-US", pitch:0.92, rate:0.95 },
-      story: "Entras a una cafetería. El barista te pregunta qué quieres tomar.",
-      goal: "Pedir bebidas",
-      es: "¿Qué deseas tomar?",
-      en: "What would you like to drink?",
-      meaning: "Forma educada para pedir algo. Muy común en tiendas/restaurantes.",
-      vocab: [
-        ["What", "qué"],
-        ["would", "auxiliar (cortesía)"],
-        ["you", "tú/usted"],
-        ["like", "gustaría"],
-        ["to drink", "beber / tomar"]
-      ],
-      type: "MULTIPLE_CHOICE",
-      choices: [
-        "What do you drink?",
-        "What would you like to drink?",
-        "Where do you like drink?"
-      ],
-      answerIndex: 1,
-      hint: "La frase educada casi siempre usa “would you like…”."
-    },
-    {
-      title: "Amigos: tu nombre",
-      teacher: { name:"Teacher Alex", emoji:"🧑‍🏫", lang:"en-US", pitch:1.02, rate:1.0 },
-      story: "Conoces a alguien. Quiere saber tu nombre.",
-      goal: "Presentarte",
-      es: "¿Cómo te llamas?",
-      en: "What's your name?",
-      meaning: "Contracción: What’s = What is. Frase básica y natural.",
-      vocab: [
-        ["What's", "qué es / cuál es"],
-        ["your", "tu"],
-        ["name", "nombre"]
-      ],
-      type: "ORDER_WORDS",
-      bank: ["name?", "your", "What's"],
-      hint: "Empieza con What’s y termina con name?"
-    },
-    {
-      title: "Mini conversación: responder rápido",
-      teacher: { name:"Teacher Anna", emoji:"👩‍🏫", lang:"en-US", pitch:1.15, rate:0.98 },
-      story: "Alguien te dice: “Nice to meet you!” Tú respondes de forma natural.",
-      goal: "Responder en conversación",
-      es: "Igualmente / Mucho gusto",
-      en: "Nice to meet you too!",
-      meaning: "‘Too’ significa ‘también’. Es respuesta normal cuando alguien dice ‘Nice to meet you’.",
-      vocab: [
-        ["Nice", "agradable / gusto"],
-        ["to meet", "conocer"],
-        ["you", "tú/usted"],
-        ["too", "también"]
-      ],
-      type: "CHAT_REPLY",
-      choices: [
-        "Nice meet you.",
-        "Nice to meet you too!",
-        "Where are you too?"
-      ],
-      answerIndex: 1,
-      hint: "La respuesta correcta incluye “too” (también)."
-    }
+  // --------- Data (real, honesto, útil) ----------
+  const tutors = [
+    { name:"Ana", esLang:"es-ES", enLang:"en-US", pitchES:1.05, rateES:0.97, pitchEN:1.10, rateEN:0.92 },
+    { name:"Mike", esLang:"es-ES", enLang:"en-US", pitchES:0.95, rateES:0.95, pitchEN:0.92, rateEN:0.92 },
+    { name:"Alex", esLang:"es-ES", enLang:"en-US", pitchES:1.00, rateES:0.98, pitchEN:1.02, rateEN:0.98 }
   ];
 
-  let idx = 0;
-  let score = 0;
-  let level = 1;
-  let hintShown = false;
+  const unit = {
+    name: "Unidad 1 — Supervivencia",
+    lessons: [
+      {
+        title: "Conocer a alguien",
+        scene: "Situación: primera vez en EE.UU. alguien te pregunta de dónde eres.",
+        es: "¿De dónde eres?",
+        en: "Where are you from?",
+        meaning: "Significa: ‘¿Cuál es tu lugar de origen?’ (país/ciudad).",
+        hint: "Pista: empieza con Where… termina con from.",
+        type: "TYPE_TRANSLATION"
+      },
+      {
+        title: "Cafetería",
+        scene: "Situación: en una cafetería. Te preguntan qué quieres tomar.",
+        es: "¿Qué te gustaría tomar?",
+        en: "What would you like to drink?",
+        meaning: "Es una forma educada para pedir algo. Muy común.",
+        hint: "Pista: la frase de cortesía usa ‘would you like’.",
+        type: "MULTIPLE_CHOICE",
+        choices: [
+          "What you like drink?",
+          "What would you like to drink?",
+          "Where would you drink?"
+        ],
+        answerIndex: 1
+      },
+      {
+        title: "Tu nombre",
+        scene: "Situación: alguien quiere saber tu nombre.",
+        es: "¿Cómo te llamas?",
+        en: "What's your name?",
+        meaning: "What’s = What is. Muy básico y natural.",
+        hint: "Pista: contracción What’s + your + name?",
+        type: "ORDER_WORDS",
+        bank: ["your", "name?", "What's"]
+      },
+      {
+        title: "Mini conversación",
+        scene: "Situación: alguien dice ‘Nice to meet you!’ Tú respondes.",
+        es: "Igualmente / Mucho gusto",
+        en: "Nice to meet you too!",
+        meaning: "‘too’ significa ‘también’. Respuesta natural.",
+        hint: "Pista: la respuesta correcta incluye ‘too’.",
+        type: "GUIDED_CHAT",
+        botEN: "Nice to meet you!",
+        options: ["Nice meet you.", "Nice to meet you too!", "Where are you too?"],
+        answerIndex: 1
+      }
+    ]
+  };
 
-  function byId(id){ return document.getElementById(id); }
-  function normalize(s){
-    return (s||"").toLowerCase().trim().replace(/[’]/g,"'").replace(/\s+/g," ");
+  // --------- State ----------
+  let tutorIndex = 0;
+  let i = 0;
+  let xp = 0;
+  let streak = 0;
+  let helpShown = false;
+
+  // --------- Helpers ----------
+  const $ = (id)=>document.getElementById(id);
+  const norm = (s)=> (s||"").toLowerCase().trim().replace(/[’]/g,"'").replace(/\s+/g," ");
+
+  function speak(text, lang, pitch=1.0, rate=1.0){
+    const u = new SpeechSynthesisUtterance(text);
+    u.lang = lang; u.pitch = pitch; u.rate = rate;
+    speechSynthesis.cancel();
+    speechSynthesis.speak(u);
+  }
+  function stopVoice(){ speechSynthesis.cancel(); }
+
+  function setTutor(n){
+    tutorIndex = n;
+    ["t0","t1","t2"].forEach((id,idx)=>$(id).classList.toggle("active", idx===n));
+    render();
   }
 
-  function render(){
-    const L = lessons[idx];
-    hintShown = false;
-    byId("feedback").innerText = "";
-    byId("hintLine").innerText = "";
+  function updateStats(){
+    $("xp").innerText = xp;
+    $("streak").innerText = streak;
+    const lvl = 1 + Math.floor(xp/40);
+    $("lvl").innerText = `Nivel ${lvl}`;
 
-    byId("teacherChip").innerText = `${L.teacher.emoji} ${L.teacher.name}`;
-    byId("progressTxt").innerText = `Lección ${idx+1}/${lessons.length}`;
-    byId("scoreTxt").innerText = `Puntos: ${score} | Nivel: ${level}`;
+    $("step").innerText = (i+1);
+    $("unit").innerText = unit.name;
 
-    byId("lessonTitle").innerText = L.title;
-    byId("modeTxt").innerText = `Modo: ${modeLabel(L.type)}`;
-    byId("goalChip").innerText = `🎯 ${L.goal}`;
-    byId("storyTxt").innerText = L.story;
-
-    byId("spanishTxt").innerText = L.es;
-    byId("englishTxt").innerText = L.en;
-    byId("meaningTxt").innerText = L.meaning;
-
-    const wordsBox = byId("wordsBox");
-    wordsBox.innerHTML = "";
-    L.vocab.forEach(([w, m])=>{
-      const el = document.createElement("span");
-      el.className = "w";
-      el.textContent = `${w} = ${m}`;
-      wordsBox.appendChild(el);
-    });
-
-    renderExercise(L);
+    const pct = Math.round(((i) / unit.lessons.length) * 100);
+    $("progressText").innerText = `Progreso: ${pct}%`;
+    $("fill").style.width = pct + "%";
   }
 
-  function modeLabel(type){
-    if(type==="LISTEN_TYPE") return "Escucha y escribe";
+  function exerciseLabel(type){
+    if(type==="TYPE_TRANSLATION") return "Traducción (ES→EN)";
     if(type==="MULTIPLE_CHOICE") return "Opción múltiple";
     if(type==="ORDER_WORDS") return "Ordena palabras";
-    if(type==="CHAT_REPLY") return "Elige respuesta";
+    if(type==="GUIDED_CHAT") return "Conversación guiada";
     return "Ejercicio";
   }
 
+  function render(){
+    helpShown = false;
+    $("fb").className = "feedback";
+    $("fb").innerText = "";
+
+    const L = unit.lessons[i];
+    $("lessonTitle").innerText = `${L.title}`;
+    $("lessonSub").innerText = `Tutor: ${tutors[tutorIndex].name} · ${unit.name}`;
+    $("exerciseTag").innerText = exerciseLabel(L.type);
+
+    $("scene").innerText = L.scene;
+    $("esText").innerText = L.es;
+
+    // En apps reales NO se muestra siempre la respuesta.
+    // Aquí se muestra “objetivo” como referencia (tipo Duolingo: puedes ocultarlo si quieres).
+    $("enText").innerText = (tutorIndex===1) ? "Escucha primero y escribe." : "Objetivo: " + L.en;
+
+    $("meaning").innerText = "📌 " + L.meaning;
+    $("hint").innerText = helpShown ? ("💡 " + L.hint) : "💡 Pista oculta (toca “Ver pista”).";
+
+    renderExercise(L);
+    updateStats();
+  }
+
   function renderExercise(L){
-    const area = byId("exerciseArea");
+    const area = $("exerciseArea");
     area.innerHTML = "";
 
-    if(L.type === "LISTEN_TYPE"){
-      const input = document.createElement("input");
-      input.id = "userInput";
-      input.placeholder = "Escribe la frase en inglés aquí…";
-      area.appendChild(input);
+    if(L.type==="TYPE_TRANSLATION"){
+      const inp = document.createElement("input");
+      inp.id = "answer";
+      inp.placeholder = "Escribe en inglés (sin ver ayuda)…";
+      area.appendChild(inp);
       return;
     }
 
-    if(L.type === "MULTIPLE_CHOICE" || L.type === "CHAT_REPLY"){
+    if(L.type==="MULTIPLE_CHOICE"){
       const wrap = document.createElement("div");
       wrap.className = "choices";
+      wrap.dataset.selected = "";
 
-      L.choices.forEach((c, i)=>{
+      L.choices.forEach((c, idx)=>{
         const btn = document.createElement("button");
         btn.className = "choice";
         btn.type = "button";
-        btn.textContent = c;
-        btn.onclick = ()=> {
-          // guarda selección
-          byId("feedback").innerText = `Seleccionaste: "${c}"`;
-          area.dataset.selected = String(i);
+        btn.innerText = c;
+        btn.onclick = ()=>{
+          wrap.dataset.selected = String(idx);
+          // Reset styles
+          [...wrap.querySelectorAll(".choice")].forEach(x=>x.classList.remove("correct","wrong"));
         };
         wrap.appendChild(btn);
       });
 
       area.appendChild(wrap);
-      area.dataset.selected = "";
       return;
     }
 
-    if(L.type === "ORDER_WORDS"){
-      const label = document.createElement("p");
-      label.className = "small";
-      label.innerText = "Toca las palabras en orden para construir la frase:";
-      area.appendChild(label);
+    if(L.type==="ORDER_WORDS"){
+      const p = document.createElement("p");
+      p.className = "small";
+      p.innerText = "Toca palabras en orden para formar la frase:";
+      area.appendChild(p);
 
       const bank = document.createElement("div");
-      bank.className = "bank";
-      bank.id = "bank";
+      bank.className = "choices";
+      bank.style.gridTemplateColumns = "1fr";
 
       const built = document.createElement("div");
-      built.className = "built";
       built.id = "built";
-      built.innerText = "Tu frase: ";
-
-      const chosen = [];
-
-      L.bank.forEach(tok=>{
-        const t = document.createElement("button");
-        t.className = "token";
-        t.type = "button";
-        t.textContent = tok;
-        t.onclick = ()=>{
-          chosen.push(tok);
-          built.innerText = "Tu frase: " + chosen.join(" ");
-          t.disabled = true;
-        };
-        bank.appendChild(t);
-      });
-
-      const resetBtn = document.createElement("button");
-      resetBtn.className = "secondary";
-      resetBtn.type = "button";
-      resetBtn.style.marginTop = "10px";
-      resetBtn.innerText = "↩️ Rehacer orden";
-      resetBtn.onclick = ()=> render(); // re-render current
-
+      built.className = "prompt";
+      built.style.marginTop = "10px";
+      built.innerHTML = `<p class="label">Tu frase:</p><p class="en" id="builtText"></p>`;
       area.appendChild(bank);
       area.appendChild(built);
-      area.appendChild(resetBtn);
+
+      const chosen = [];
+      L.bank.forEach(tok=>{
+        const b = document.createElement("button");
+        b.className = "choice";
+        b.type = "button";
+        b.innerText = tok;
+        b.onclick = ()=>{
+          chosen.push(tok);
+          $("builtText").innerText = chosen.join(" ");
+          b.disabled = true;
+          b.style.opacity = .55;
+        };
+        bank.appendChild(b);
+      });
+
+      const reset = document.createElement("button");
+      reset.className = "btn secondary";
+      reset.style.marginTop = "10px";
+      reset.innerText = "↩️ Rehacer";
+      reset.onclick = ()=>render();
+      area.appendChild(reset);
+      return;
+    }
+
+    if(L.type==="GUIDED_CHAT"){
+      const box = document.createElement("div");
+      box.className = "prompt";
+      box.innerHTML = `<p class="label">Él/Ella dice:</p><p class="en">"${L.botEN}"</p><p class="label" style="margin-top:10px">Tú respondes:</p>`;
+      area.appendChild(box);
+
+      const wrap = document.createElement("div");
+      wrap.className = "choices";
+      wrap.dataset.selected = "";
+      L.options.forEach((c, idx)=>{
+        const btn = document.createElement("button");
+        btn.className = "choice";
+        btn.type = "button";
+        btn.innerText = c;
+        btn.onclick = ()=>{
+          wrap.dataset.selected = String(idx);
+          [...wrap.querySelectorAll(".choice")].forEach(x=>x.classList.remove("correct","wrong"));
+        };
+        wrap.appendChild(btn);
+      });
+      area.appendChild(wrap);
       return;
     }
   }
 
-  function speak(){
-    const L = lessons[idx];
-    const u = new SpeechSynthesisUtterance(L.en);
-    u.lang = L.teacher.lang;
-    u.pitch = L.teacher.pitch;
-    u.rate = L.teacher.rate;
-    speechSynthesis.cancel();
-    speechSynthesis.speak(u);
+  function speakPrompt(){
+    const L = unit.lessons[i];
+    const T = tutors[tutorIndex];
+    const question = `¿Cómo se dice "${L.es}" en inglés?`;
+    speak(question, T.esLang, T.pitchES, T.rateES);
   }
 
-  function mute(){
-    speechSynthesis.cancel();
-    byId("feedback").innerText = "🔇 Voz detenida.";
+  function speakAnswer(){
+    const L = unit.lessons[i];
+    const T = tutors[tutorIndex];
+    speak(L.en, T.enLang, T.pitchEN, T.rateEN);
   }
 
-  function showHint(){
-    const L = lessons[idx];
-    hintShown = true;
-    byId("hintLine").innerText = "💡 Pista: " + L.hint;
-  }
-
-  function check(){
-    const L = lessons[idx];
-
-    // Reglas de validación por tipo:
-    if(L.type === "LISTEN_TYPE"){
-      const val = normalize(byId("userInput").value);
-      const correct = normalize(L.en);
-      if(!val){
-        byId("feedback").innerText = "Escribe algo primero 🙂";
-        return;
-      }
-      if(val === correct){
-        win("✅ Perfecto. Suena natural.");
-      } else {
-        byId("feedback").innerText = "❌ Casi. Toca 🔊 y copia la frase exacta (tiene que ser igual).";
-      }
-      return;
-    }
-
-    if(L.type === "MULTIPLE_CHOICE" || L.type === "CHAT_REPLY"){
-      const selected = byId("exerciseArea").dataset.selected;
-      if(selected === ""){
-        byId("feedback").innerText = "Elige una opción primero 🙂";
-        return;
-      }
-      if(Number(selected) === L.answerIndex){
-        win("✅ Correcto. Así responden los americanos.");
-      } else {
-        byId("feedback").innerText = "❌ Incorrecto. Usa la opción que suena natural (con gramática completa).";
-        if(hintShown) byId("feedback").innerText += " (Mira la pista arriba)";
-      }
-      return;
-    }
-
-    if(L.type === "ORDER_WORDS"){
-      const built = byId("built").innerText.replace("Tu frase:","").trim();
-      const val = normalize(built);
-      const correct = normalize(L.en);
-      if(!val){
-        byId("feedback").innerText = "Toca las palabras para formar la frase 🙂";
-        return;
-      }
-      if(val === correct){
-        win("✅ Excelente. Orden perfecto.");
-      } else {
-        byId("feedback").innerText = "❌ El orden no está bien. Dale a “Rehacer orden” y prueba otra vez.";
-      }
-      return;
-    }
+  function showHelp(){
+    helpShown = true;
+    const L = unit.lessons[i];
+    $("hint").innerText = "💡 " + L.hint;
+    speak("Pista. " + L.hint, tutors[tutorIndex].esLang, tutors[tutorIndex].pitchES, tutors[tutorIndex].rateES);
   }
 
   function win(msg){
-    score += hintShown ? 5 : 10;
-    // nivel cada 30 puntos
-    level = 1 + Math.floor(score / 30);
-    byId("scoreTxt").innerText = `Puntos: ${score} | Nivel: ${level}`;
-    byId("feedback").innerText = msg + ` (+${hintShown?5:10} puntos)`;
+    const gain = helpShown ? 8 : 12;
+    xp += gain;
+    streak += 1;
+    $("fb").className = "feedback ok";
+    $("fb").innerText = `✅ ${msg} (+${gain} XP)`;
+    speak("Correcto. Muy bien.", tutors[tutorIndex].esLang, tutors[tutorIndex].pitchES, tutors[tutorIndex].rateES);
+    updateStats();
   }
 
-  function next(){
-    if(idx < lessons.length - 1){
-      idx++;
-      render();
-    } else {
-      byId("lessonTitle").innerText = "🎉 Demo completada";
-      byId("modeTxt").innerText = "Siguiente: agregar 20 lecciones";
-      byId("storyTxt").innerText = "Ya tienes profesores con voz, significado en español y 4 tipos de ejercicios. Esto sí es una base real.";
-      byId("exerciseArea").innerHTML = "";
-      byId("feedback").innerText = `Final: ${score} puntos | Nivel ${level}`;
-      byId("hintLine").innerText = "Si quieres, te preparo 20 lecciones más con el mismo formato.";
+  function lose(msg){
+    streak = 0;
+    $("fb").className = "feedback bad";
+    $("fb").innerText = `❌ ${msg}`;
+    speak("No. Inténtalo otra vez.", tutors[tutorIndex].esLang, tutors[tutorIndex].pitchES, tutors[tutorIndex].rateES);
+    updateStats();
+  }
+
+  function check(){
+    const L = unit.lessons[i];
+
+    if(L.type==="TYPE_TRANSLATION"){
+      const val = norm(($("answer")||{}).value);
+      if(!val) return lose("Escribe tu respuesta en inglés.");
+      if(val === norm(L.en)) return win("Traducción perfecta.");
+      return lose("No coincide. Escucha el inglés y prueba de nuevo.");
+    }
+
+    if(L.type==="MULTIPLE_CHOICE"){
+      const wrap = $("exerciseArea").querySelector(".choices");
+      const sel = wrap?.dataset.selected ?? "";
+      if(sel==="") return lose("Elige una opción.");
+      const ok = Number(sel) === L.answerIndex;
+      const btns = [...wrap.querySelectorAll(".choice")];
+      btns.forEach((b, idx)=>{
+        if(idx === L.answerIndex) b.classList.add("correct");
+        if(idx === Number(sel) && !ok) b.classList.add("wrong");
+      });
+      return ok ? win("Excelente elección.") : lose("Esa no suena natural en inglés.");
+    }
+
+    if(L.type==="ORDER_WORDS"){
+      const built = (document.getElementById("builtText")?.innerText)||"";
+      if(!built.trim()) return lose("Forma la frase tocando las palabras.");
+      if(norm(built) === norm(L.en)) return win("Orden correcto.");
+      return lose("El orden está mal. Rehaz y prueba.");
+    }
+
+    if(L.type==="GUIDED_CHAT"){
+      const wrap = $("exerciseArea").querySelector(".choices");
+      const sel = wrap?.dataset.selected ?? "";
+      if(sel==="") return lose("Elige una respuesta.");
+      const ok = Number(sel) === L.answerIndex;
+      const btns = [...wrap.querySelectorAll(".choice")];
+      btns.forEach((b, idx)=>{
+        if(idx === L.answerIndex) b.classList.add("correct");
+        if(idx === Number(sel) && !ok) b.classList.add("wrong");
+      });
+      return ok ? win("Respuesta natural.") : lose("Eso suena raro en inglés. Elige la natural.");
     }
   }
 
-  function resetProgress(){
-    idx = 0; score = 0; level = 1;
+  function next(){
+    stopVoice();
+    helpShown = false;
+    $("hint").innerText = "💡 Pista oculta (toca “Ver pista”).";
+    $("fb").className = "feedback";
+    $("fb").innerText = "";
+
+    if(i < unit.lessons.length - 1){
+      i++;
+      render();
+    } else {
+      $("lessonTitle").innerText = "🎉 Unidad completada";
+      $("lessonSub").innerText = "Esto ya es una base tipo Duolingo (sin backend).";
+      $("exerciseTag").innerText = "Finish";
+      $("scene").innerText = "Siguiente paso real: agregar 50+ lecciones, audio por palabra y un modo conversación con API.";
+      $("esText").innerText = "¿Listo para la Unidad 2?";
+      $("enText").innerText = "You’re ready for Unit 2.";
+      $("meaning").innerText = "📌 Si quieres IA conversacional real (como tutor), ahí sí se integra API + backend. Sin mentiras.";
+      $("hint").innerText = "💡 Dime y te doy la arquitectura mínima y segura.";
+      $("exerciseArea").innerHTML = "";
+      updateStats();
+    }
+  }
+
+  function resetAll(){
+    stopVoice();
+    tutorIndex = 0; i = 0; xp = 0; streak = 0; helpShown = false;
+    ["t0","t1","t2"].forEach((id,idx)=>$(id).classList.toggle("active", idx===0));
     render();
   }
 
+  // Init
   render();
 </script>
 </body>
