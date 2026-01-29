@@ -1,44 +1,46 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
+  <meta charset="UTF-8">
   <title>Learn English AI</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #0f172a;
-      color: white;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      height: 100vh;
-      text-align: center;
-    }
-    .card {
-      background: #1e293b;
-      padding: 30px;
-      border-radius: 12px;
-      max-width: 400px;
+      background:#0f172a;
+      color:white;
+      font-family:Arial, sans-serif;
+      text-align:center;
+      padding:40px;
     }
     button {
-      margin-top: 15px;
-      padding: 10px 20px;
-      border: none;
-      border-radius: 8px;
-      background: #22c55e;
-      color: black;
-      font-size: 16px;
+      background:#22c55e;
+      border:none;
+      padding:15px 25px;
+      font-size:18px;
+      border-radius:10px;
+      cursor:pointer;
     }
   </style>
 </head>
 <body>
-  <div class="card">
-    <h1>Learn English AI 🇺🇸</h1>
-    <p>Practice English with AI teachers</p>
-    <button onclick="alert('Coming soon 🚀')">
-      Start Learning
-    </button>
+
+  <h1>Learn English AI 🚀</h1>
+  <p>Lesson 1: Basic English</p>
+
+  <button onclick="startLesson()">Start Learning</button>
+
+  <div id="lesson" style="display:none; margin-top:30px;">
+    <h2>Hello 👋</h2>
+    <p>Hello = Hola</p>
+    <p>How are you? = ¿Cómo estás?</p>
+    <p>Thank you = Gracias</p>
   </div>
+
+  <script>
+    function startLesson() {
+      document.getElementById("lesson").style.display = "block";
+    }
+  </script>
+
 </body>
 </html>
