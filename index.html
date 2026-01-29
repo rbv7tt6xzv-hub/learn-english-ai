@@ -3,7 +3,7 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>English Tutor AI — Curso Completo (Duro-Humano)</title>
+  <title>English Tutor AI — Interactivo</title>
   <style>
     :root{
       --bg:#0b1220; --panel:#0f172a; --card:#101b33; --line:#22304f;
@@ -33,7 +33,7 @@
     .pill span{
       padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(16,27,51,.6)
     }
-    .grid{display:grid;grid-template-columns:1.2fr .8fr;gap:14px;margin-top:14px}
+    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}
     @media (max-width:900px){.grid{grid-template-columns:1fr}}
     .panel{
       background:rgba(15,23,42,.55);
@@ -51,7 +51,7 @@
       padding:14px;
     }
 
-    /* Tutor AI block */
+    /* Tutor block */
     .tutorHeader{display:flex;gap:12px;align-items:center;justify-content:space-between}
     .tutorLeft{display:flex;gap:10px;align-items:center}
     .avatar{
@@ -60,15 +60,16 @@
       border:1px solid rgba(34,197,94,.35);
       display:grid;place-items:center;font-size:18px
     }
-    .tutorMeta{display:flex;flex-direction:column;line-height:1.1}
+    .tutorMeta{display:flex;flex-direction:column;line-height:1.15}
     .tutorMeta b{font-size:13px}
     .tutorMeta small{color:var(--muted);font-size:12px}
     .statusDot{width:8px;height:8px;border-radius:50%}
     .statusRow{display:flex;gap:8px;align-items:center}
+
     .btnRow{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
     button{
       appearance:none;border:0;cursor:pointer;
-      padding:12px 14px;border-radius:14px;font-weight:700;
+      padding:12px 14px;border-radius:14px;font-weight:800;
       background:rgba(148,163,184,.12);color:var(--text);
       border:1px solid var(--line);
     }
@@ -84,12 +85,12 @@
       border-radius:18px;
       background:rgba(11,18,32,.55);
       padding:12px;
-      height:290px;
+      height:320px;
       overflow:auto;
     }
     .msg{display:flex;gap:10px;margin:10px 0}
     .msg .bubble{
-      max-width:85%;
+      max-width:88%;
       padding:10px 12px;border-radius:16px;border:1px solid var(--line);
       background:rgba(16,27,51,.72)
     }
@@ -98,11 +99,10 @@
       background:rgba(34,197,94,.15);
       border-color:rgba(34,197,94,.35)
     }
-    .msg.ai .bubble{
-      background:rgba(148,163,184,.10);
-    }
+    .msg.ai .bubble{background:rgba(148,163,184,.10)}
     .bubble .meta{font-size:11px;color:var(--muted);margin-bottom:6px}
     .bubble .text{white-space:pre-wrap}
+
     .inputRow{display:flex;gap:10px;margin-top:10px}
     .inputRow input{
       flex:1;
@@ -111,11 +111,10 @@
       outline:none;
     }
     .helper{color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4}
+    .tiny{font-size:11px;color:var(--muted)}
 
     /* Exercise */
-    .prompt{
-      font-size:16px;margin:0 0 10px 0;line-height:1.35
-    }
+    .prompt{font-size:15px;margin:0 0 10px 0;line-height:1.35}
     .tag{font-size:12px;color:var(--muted)}
     .box{
       border:1px dashed rgba(148,163,184,.35);
@@ -124,12 +123,10 @@
     }
     .chip{
       padding:8px 10px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(16,27,51,.7);cursor:pointer;font-weight:700
+      background:rgba(16,27,51,.7);cursor:pointer;font-weight:800
     }
     .chip:active{transform:scale(.98)}
-    .note{
-      font-size:12px;color:var(--muted);margin-top:10px
-    }
+    .note{font-size:12px;color:var(--muted);margin-top:10px}
     .result{
       margin-top:12px;border:1px solid var(--line);border-radius:16px;
       padding:12px;background:rgba(16,27,51,.55)
@@ -137,29 +134,28 @@
     .ok{color:#a7f3d0}
     .bad{color:#fecaca}
     .muted{color:var(--muted)}
-    .tiny{font-size:11px;color:var(--muted)}
   </style>
 </head>
 <body>
   <div class="wrap">
     <div class="topbar">
       <div class="brand">
-        <b>English Tutor AI — Curso Completo (Duro-Humano)</b>
-        <small>Escribe + habla + corrige. Tutor AI visible en pantalla.</small>
+        <b>English Tutor AI — Interactivo</b>
+        <small>Tutor visible + chat + corrección + micrófono + voz (opcional)</small>
       </div>
       <div class="pill">
-        <span id="modePill">Modo: Mixto (Local + IA opcional)</span>
-        <span id="micPill">🎙️ Mic: sin probar</span>
-        <span id="netPill">🌐 IA: no configurada</span>
+        <span id="pillTutor">🤖 Tutor: Local (Listo)</span>
+        <span id="pillMic">🎙️ Mic: sin probar</span>
+        <span id="pillVoice">🔊 Voz: lista</span>
       </div>
     </div>
 
     <div class="grid">
-      <!-- LEFT: Tutor AI -->
+      <!-- Tutor -->
       <div class="panel">
         <div class="h2">
-          <h2>🤖 Tutor AI (Visible)</h2>
-          <small>Chat + corrección + sugerencias</small>
+          <h2>🤖 Tutor AI (Interactivo)</h2>
+          <small>Responde siempre (Local o IA real)</small>
         </div>
 
         <div class="card">
@@ -176,9 +172,10 @@
             </div>
 
             <div class="btnRow">
-              <button id="btnSpeak" class="primary">🎤 Hablar (EN) y evaluar</button>
-              <button id="btnStop" class="danger" disabled>⏹️ Parar micrófono</button>
-              <button id="btnHint" class="warn">💡 Pista</button>
+              <button id="btnSpeak" class="primary">🎤 Hablar (EN)</button>
+              <button id="btnStop" class="danger" disabled>⏹️ Parar</button>
+              <button id="btnSay" class="warn">🔊 Hablar respuesta</button>
+              <button id="btnHint">💡 Pista</button>
             </div>
           </div>
 
@@ -190,24 +187,24 @@
           </div>
 
           <div class="helper">
-            Tip: si el mic falla en iPhone, ve a <b>Ajustes → Safari → Micrófono → Permitir</b> y en la página toca <b>aA → Configuración del sitio → Micrófono → Permitir</b>.
+            iPhone: si el mic falla → <b>Ajustes → Safari → Micrófono → Permitir</b> y en la página <b>aA → Configuración del sitio → Micrófono → Permitir</b>.
           </div>
           <div class="tiny" style="margin-top:8px">
-            IA real opcional: si configuras un endpoint, el tutor responde “de verdad”. Si no, usa modo local automático.
+            IA real opcional: pega tu endpoint en el código (AI_ENDPOINT). Si no, el Tutor Local siempre responde.
           </div>
         </div>
       </div>
 
-      <!-- RIGHT: Exercise -->
+      <!-- Ejercicio -->
       <div class="panel">
         <div class="h2">
-          <h2>🧩 Ejercicio rápido</h2>
-          <small>Word Bank + revisión</small>
+          <h2>🧩 Ejercicio (Word Bank)</h2>
+          <small>Arma + revisa + envía al tutor</small>
         </div>
 
         <div class="card">
-          <p class="prompt"><span class="tag">Responder escribiendo (EN)</span><br>
-            Construye la frase correcta con el Word Bank y luego envíala al Tutor.
+          <p class="prompt"><span class="tag">Meta de hoy</span><br>
+            Construye y di: <b>I need help.</b> Luego súbelo a: <b>I need help with English.</b>
           </p>
 
           <div class="box" id="bank">
@@ -219,13 +216,13 @@
             <div class="chip" data-word="please.">please.</div>
           </div>
 
-          <div class="note">Tu frase:</div>
+          <div class="note">Tu frase (toca para quitar palabras):</div>
           <div class="box" id="phraseBox"><span class="muted">Toca palabras para armar la oración…</span></div>
 
           <div class="btnRow" style="margin-top:10px;justify-content:flex-start">
             <button id="btnRedo">↩️ Rehacer</button>
             <button id="btnToInput">➡️ Pasar al input</button>
-            <button id="btnReview" class="primary">✅ Revisar</button>
+            <button id="btnReview" class="primary">✅ Revisar + enviar</button>
           </div>
 
           <div class="result" id="reviewBox" style="display:none"></div>
@@ -235,34 +232,22 @@
   </div>
 
 <script>
-/** =========================
- *  CONFIG (IA real opcional)
- *  =========================
- *  Si quieres IA real (modo 2), crea un endpoint que acepte POST JSON:
- *  { "message": "text", "context": {...} }
- *  y responda JSON:
- *  { "reply": "texto del tutor", "correction": "...", "score": 0-100 }
- *
- *  Luego pega la URL aquí:
- */
-const AI_ENDPOINT = ""; // <- ejemplo: "https://tu-app.vercel.app/api/tutor"
+/** ==========================================================
+ *  (2) IA real opcional: pega aquí tu endpoint cuando lo tengas
+ *  Si está vacío, el Tutor Local SIEMPRE responde (modo 3).
+ *  ========================================================== */
+const AI_ENDPOINT = ""; // ejemplo: "https://tu-app.vercel.app/api/tutor"
 
-/** =========================
- *  Estado global
- *  ========================= */
-let recognition = null;
-let isRecording = false;
-
+/** ===== Helpers UI ===== */
 const el = (id) => document.getElementById(id);
-
 const chat = el("chat");
 const statusDot = el("statusDot");
 const statusText = el("statusText");
-const micPill = el("micPill");
-const netPill = el("netPill");
+const pillMic = el("pillMic");
+const pillTutor = el("pillTutor");
+const pillVoice = el("pillVoice");
 
 function setStatus(type, text){
-  // type: idle | listening | thinking | ok | bad
   const map = {
     idle: "var(--muted)",
     listening: "var(--yellow)",
@@ -274,157 +259,175 @@ function setStatus(type, text){
   statusText.textContent = text;
 }
 
+let lastTutorText = "";
+
 function addMsg(role, text){
   const row = document.createElement("div");
   row.className = "msg " + (role === "user" ? "user" : "ai");
   const bubble = document.createElement("div");
   bubble.className = "bubble";
+
   const meta = document.createElement("div");
   meta.className = "meta";
   meta.textContent = role === "user" ? "You" : "Tutor AI";
+
   const body = document.createElement("div");
   body.className = "text";
   body.textContent = text;
+
   bubble.appendChild(meta);
   bubble.appendChild(body);
   row.appendChild(bubble);
   chat.appendChild(row);
   chat.scrollTop = chat.scrollHeight;
+
+  if(role === "ai") lastTutorText = text;
 }
 
 function normalize(s){
-  return (s || "")
-    .trim()
-    .replace(/\s+/g," ")
-    .replace(/[“”]/g,'"')
-    .replace(/[’]/g,"'");
-}
-
-/** =========================
- *  Tutor Local (modo 3)
- *  ========================= */
-function localTutorReply(userText){
-  const t = normalize(userText);
-  const lower = t.toLowerCase();
-
-  // “Correcciones” simples (muy útiles para tu demo)
-  let correction = null;
-  let score = 70;
-  let tip = "";
-
-  // Heurísticas básicas
-  if (!t) {
-    return { reply: "I didn’t catch that. Type a short sentence like: “I need help.”", correction: "", score: 0 };
-  }
-
-  // Caso objetivo: I need help.
-  const target1 = "i need help.";
-  const target2 = "i need help";
-  if (lower === target1 || lower === target2){
-    score = 95;
-    tip = "Great! Now level up: “I need help with English.”";
-    return {
-      reply: `✅ Correct.\n\nTry this next:\n• I need help with English.\n• Can you help me, please?\n\nPronunciation tip: say “need” like /niːd/ (long ee).`,
-      correction: "I need help.",
-      score
-    };
-  }
-
-  // Si usa palabras del banco pero desordenadas
-  if (lower.includes("need") && lower.includes("help") && !lower.includes("i need")){
-    correction = "I need help.";
-    score = 55;
-    tip = "Put “I” before “need”.";
-  }
-
-  // Si escribió “Need I help”
-  if (lower.includes("need i help")){
-    correction = "I need help.";
-    score = 45;
-    tip = "In English: Subject + verb → “I need …”";
-  }
-
-  // Si pide ayuda con inglés
-  if (lower.includes("help with english")){
-    score = 92;
-    return {
-      reply: `✅ Nice sentence.\n\nI’d say:\n• “I need help with English.”\n\nNow answer me:\n👉 What do you need help with?`,
-      correction: "I need help with English.",
-      score
-    };
-  }
-
-  // Respuesta general
-  const general = [];
-  general.push("Thanks! Here’s a cleaner version:");
-  general.push("• " + (correction || smartPolish(t)));
-  general.push("");
-  general.push("Now repeat it slowly once.");
-
-  return {
-    reply: general.join("\n"),
-    correction: correction || smartPolish(t),
-    score
-  };
+  return (s || "").trim().replace(/\s+/g," ");
 }
 
 function smartPolish(t){
-  // Capitaliza primera letra y asegura punto final si parece frase
   let s = normalize(t);
-  if (!s) return s;
+  if(!s) return s;
+  s = s.replace(/\bi\b/g,"I");
   s = s[0].toUpperCase() + s.slice(1);
-  if (!/[.!?]$/.test(s)) s += ".";
-  // Arreglo mínimo “i” → “I”
-  s = s.replace(/\bi\b/g, "I");
+  if(!/[.!?]$/.test(s)) s += ".";
   return s;
 }
 
-/** =========================
- *  IA Real (modo 2) con fallback
- *  ========================= */
-async function tutorRespond(userText){
-  const useRealAI = !!AI_ENDPOINT;
-  netPill.textContent = useRealAI ? "🌐 IA: configurada" : "🌐 IA: no configurada";
+/** ===== (3) Tutor Local (interacción real sin internet) ===== */
+function localTutor(userText){
+  const t = normalize(userText);
+  const low = t.toLowerCase();
 
-  setStatus("thinking", "Thinking…");
-  try{
-    if (useRealAI){
-      const res = await fetch(AI_ENDPOINT, {
-        method: "POST",
-        headers: {"Content-Type":"application/json"},
-        body: JSON.stringify({
-          message: userText,
-          context: {
-            lesson: "Basic sentence building",
-            target: "I need help."
-          }
-        })
-      });
-      if (!res.ok) throw new Error("Endpoint error");
-      const data = await res.json();
-      const reply = data.reply || "(No reply)";
-      setStatus("ok", "Replied");
-      return {
-        reply,
-        correction: data.correction || "",
-        score: typeof data.score === "number" ? data.score : null
-      };
-    }
-  }catch(e){
-    // cae a local
+  let score = 75;
+  let correction = "";
+  let reply = "";
+
+  if(!t){
+    return { reply: "I didn’t catch that. Type: “I need help.”", score: 0, correction: "" };
   }
-  const local = localTutorReply(userText);
-  setStatus(local.score >= 80 ? "ok" : "bad", local.score >= 80 ? "Good" : "Needs work");
-  return local;
+
+  // Objetivo principal
+  if(low === "i need help" || low === "i need help."){
+    score = 95;
+    correction = "I need help.";
+    reply =
+`✅ Correct!
+Now upgrade:
+• I need help with English.
+• Can you help me, please?
+
+Say it again slowly: “I need help.”`;
+    return { reply, score, correction };
+  }
+
+  // Objetivo 2
+  if(low.includes("i need help with english")){
+    score = 92;
+    correction = "I need help with English.";
+    reply =
+`✅ Nice!
+Now answer:
+👉 What do you need help with?
+
+Example:
+• I need help with my pronunciation.`;
+    return { reply, score, correction };
+  }
+
+  // Si tiene help/need pero está raro
+  if(low.includes("need") && low.includes("help") && !low.startsWith("i need")){
+    score = 55;
+    correction = "I need help.";
+    reply =
+`❌ Almost. In English: Subject + verb.
+Try:
+• I need help.
+
+Repeat: “I need help.”`;
+    return { reply, score, correction };
+  }
+
+  // Respuesta general
+  correction = smartPolish(t);
+  reply =
+`Here is a cleaner version:
+• ${correction}
+
+Now repeat it slowly once.`;
+  return { reply, score, correction };
 }
 
-/** =========================
- *  Mic (Web Speech API)
- *  ========================= */
+function formatFooter(ans){
+  const bits = [];
+  if(ans.correction) bits.push("Correction: " + ans.correction);
+  if(typeof ans.score === "number") bits.push("Score: " + ans.score + "/100");
+  return bits.length ? ("\n\n—\n" + bits.join("\n")) : "";
+}
+
+/** ===== (2) IA Real opcional con fallback a Local ===== */
+async function tutorRespond(userText){
+  if(AI_ENDPOINT){
+    try{
+      setStatus("thinking","Thinking…");
+      pillTutor.textContent = "🤖 Tutor: IA real (Conectada)";
+      const res = await fetch(AI_ENDPOINT,{
+        method:"POST",
+        headers:{ "Content-Type":"application/json" },
+        body: JSON.stringify({
+          message: userText,
+          context: { goal: "I need help.", level: "A1/A2" }
+        })
+      });
+      if(res.ok){
+        const data = await res.json();
+        const reply = data.reply || "(No reply)";
+        const score = (typeof data.score === "number") ? data.score : null;
+        const correction = data.correction || "";
+        setStatus("ok","Replied");
+        return { reply, score, correction };
+      }
+    }catch(e){
+      // cae a local
+    }
+  }
+  pillTutor.textContent = "🤖 Tutor: Local (Listo)";
+  const ans = localTutor(userText);
+  setStatus(ans.score >= 80 ? "ok" : "bad", ans.score >= 80 ? "Good" : "Needs work");
+  return ans;
+}
+
+/** ===== Voz (Text-to-Speech) ===== */
+function speak(text){
+  if(!("speechSynthesis" in window)){
+    pillVoice.textContent = "🔊 Voz: no soportada";
+    return;
+  }
+  const main = (text || "").split("\n\n—\n")[0]; // no leer score/correction
+  if(!main.trim()) return;
+
+  try{
+    window.speechSynthesis.cancel();
+    const u = new SpeechSynthesisUtterance(main);
+    u.lang = "en-US";
+    window.speechSynthesis.speak(u);
+    pillVoice.textContent = "🔊 Voz: hablando";
+    u.onend = () => pillVoice.textContent = "🔊 Voz: lista";
+  }catch(e){
+    pillVoice.textContent = "🔊 Voz: error";
+  }
+}
+
+/** ===== Mic (Speech-to-Text) ===== */
+let recognition = null;
+
 function initMic(){
   const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if (!SR){
-    micPill.textContent = "🎙️ Mic: no soportado";
+  if(!SR){
+    pillMic.textContent = "🎙️ Mic: no soportado";
     return null;
   }
   const r = new SR();
@@ -433,109 +436,99 @@ function initMic(){
   r.maxAlternatives = 1;
 
   r.onstart = () => {
-    isRecording = true;
-    setStatus("listening", "Listening…");
-    micPill.textContent = "🎙️ Mic: escuchando";
+    setStatus("listening","Listening…");
+    pillMic.textContent = "🎙️ Mic: escuchando";
     el("btnSpeak").disabled = true;
     el("btnStop").disabled = false;
   };
 
   r.onend = () => {
-    isRecording = false;
     el("btnSpeak").disabled = false;
     el("btnStop").disabled = true;
-    if (statusText.textContent === "Listening…") setStatus("idle", "Idle");
-    if (micPill.textContent === "🎙️ Mic: escuchando") micPill.textContent = "🎙️ Mic: detenido";
+    if(statusText.textContent === "Listening…") setStatus("idle","Idle");
+    if(pillMic.textContent === "🎙️ Mic: escuchando") pillMic.textContent = "🎙️ Mic: detenido";
   };
 
   r.onerror = (ev) => {
-    // Safari iOS suele dar aborted/not-allowed
-    micPill.textContent = "🎙️ Mic: error (" + (ev.error || "unknown") + ")";
-    setStatus("bad", "Mic error");
+    setStatus("bad","Mic error");
+    pillMic.textContent = "🎙️ Mic: error (" + (ev.error || "unknown") + ")";
+    addMsg("ai","Mic error: " + (ev.error || "unknown") + "\nTip iPhone: Ajustes → Safari → Micrófono → Permitir");
   };
 
   r.onresult = async (event) => {
     const spoken = event.results?.[0]?.[0]?.transcript || "";
-    micPill.textContent = "🎙️ Mic: capturado";
-    if (spoken){
+    pillMic.textContent = "🎙️ Mic: capturado";
+    if(spoken){
       addMsg("user", spoken);
       const ans = await tutorRespond(spoken);
       addMsg("ai", ans.reply + formatFooter(ans));
     }else{
-      addMsg("ai", "I didn’t catch anything. Please try again.");
+      addMsg("ai","I didn’t catch anything. Try again.");
     }
   };
 
-  micPill.textContent = "🎙️ Mic: listo";
+  pillMic.textContent = "🎙️ Mic: listo";
   return r;
 }
 
-function formatFooter(ans){
-  const bits = [];
-  if (ans.correction) bits.push("Correction: " + ans.correction);
-  if (typeof ans.score === "number") bits.push("Score: " + ans.score + "/100");
-  return bits.length ? ("\n\n—\n" + bits.join("\n")) : "";
-}
+recognition = initMic();
 
-/** =========================
- *  UI handlers
- *  ========================= */
-function seedChat(){
-  addMsg("ai",
-`Hi! I’m Teacher Emma (AI).
-Type a sentence, or tap 🎤 to speak.
-Today’s target: “I need help.”`);
-  addMsg("ai", `Try now: “I need help.”`);
+/** ===== Acciones ===== */
+async function handleUserText(t){
+  const text = normalize(t);
+  if(!text) return;
+  addMsg("user", text);
+  setStatus("thinking","Thinking…");
+  const ans = await tutorRespond(text);
+  addMsg("ai", ans.reply + formatFooter(ans));
 }
-seedChat();
 
 el("btnSend").onclick = async () => {
-  const t = normalize(el("userInput").value);
-  if (!t) return;
+  const t = el("userInput").value;
   el("userInput").value = "";
-  addMsg("user", t);
-  const ans = await tutorRespond(t);
-  addMsg("ai", ans.reply + formatFooter(ans));
+  await handleUserText(t);
 };
 
-el("userInput").addEventListener("keydown", (e) => {
-  if (e.key === "Enter") el("btnSend").click();
+el("userInput").addEventListener("keydown",(e)=>{
+  if(e.key === "Enter") el("btnSend").click();
 });
 
 el("btnHint").onclick = () => {
-  addMsg("ai", "Hint: Use Subject + Verb → “I need …”\nTry: “I need help.”");
+  addMsg("ai",
+`Hint:
+Subject + verb → “I need …”
+Try:
+• I need help.
+• I need help with English.`);
 };
 
-recognition = initMic();
-
-el("btnSpeak").onclick = () => {
-  if (!recognition){
-    addMsg("ai", "Your browser doesn’t support the microphone here. Try typing instead.");
+el("btnSay").onclick = () => {
+  if(!lastTutorText){
+    addMsg("ai","Say something first, then I’ll read my reply.");
     return;
   }
-  try{
-    recognition.start();
-  }catch(e){
-    // a veces start() falla si se llama dos veces rápido
-    micPill.textContent = "🎙️ Mic: bloqueado";
+  speak(lastTutorText);
+};
+
+el("btnSpeak").onclick = () => {
+  if(!recognition){
+    addMsg("ai","Mic not supported here. Type instead.");
+    return;
   }
+  try{ recognition.start(); }catch(e){}
 };
 
 el("btnStop").onclick = () => {
-  try{
-    recognition && recognition.stop();
-  }catch(e){}
+  try{ recognition.stop(); }catch(e){}
 };
 
-/** =========================
- *  Word Bank exercise
- *  ========================= */
-const phraseBox = el("phraseBox");
+/** ===== Word Bank ===== */
 let phraseWords = [];
+const phraseBox = el("phraseBox");
 
 function renderPhrase(){
   phraseBox.innerHTML = "";
-  if (phraseWords.length === 0){
+  if(phraseWords.length === 0){
     const span = document.createElement("span");
     span.className = "muted";
     span.textContent = "Toca palabras para armar la oración…";
@@ -547,17 +540,14 @@ function renderPhrase(){
     chip.className = "chip";
     chip.textContent = w;
     chip.title = "Toca para quitar";
-    chip.onclick = () => {
-      phraseWords.splice(idx,1);
-      renderPhrase();
-    };
+    chip.onclick = () => { phraseWords.splice(idx,1); renderPhrase(); };
     phraseBox.appendChild(chip);
   });
 }
 
-el("bank").addEventListener("click", (e) => {
+el("bank").addEventListener("click",(e)=>{
   const t = e.target;
-  if (!t.classList.contains("chip")) return;
+  if(!t.classList.contains("chip")) return;
   phraseWords.push(t.dataset.word);
   renderPhrase();
 });
@@ -569,40 +559,43 @@ el("btnRedo").onclick = () => {
 };
 
 el("btnToInput").onclick = () => {
-  const sentence = phraseWords.join(" ").replace(/\s+([.?!,])/g, "$1");
+  const sentence = phraseWords.join(" ").replace(/\s+([.?!,])/g,"$1");
   el("userInput").value = sentence;
   el("userInput").focus();
 };
 
 el("btnReview").onclick = async () => {
-  const sentence = phraseWords.join(" ").replace(/\s+([.?!,])/g, "$1");
   const reviewBox = el("reviewBox");
+  const sentence = phraseWords.join(" ").replace(/\s+([.?!,])/g,"$1");
   reviewBox.style.display = "block";
 
-  if (!sentence.trim()){
+  if(!sentence.trim()){
     reviewBox.innerHTML = `<div class="bad">❌ Arma una frase primero.</div>`;
     return;
   }
 
-  // Revisión simple + envía al tutor
   const target = "I need help.";
   const polished = smartPolish(sentence);
   const ok = normalize(polished).toLowerCase() === target.toLowerCase();
 
   reviewBox.innerHTML = ok
-    ? `<div class="ok">✅ Correcto: <b>${target}</b></div><div class="muted">Ahora envíala al Tutor AI para subir de nivel.</div>`
+    ? `<div class="ok">✅ Correcto: <b>${target}</b></div><div class="muted">Enviado al Tutor para subir nivel.</div>`
     : `<div class="bad">❌ Casi. Recomendado: <b>${target}</b></div><div class="muted">Tip: “I” va antes de “need”.</div>`;
 
-  // Manda al tutor automáticamente
-  addMsg("user", polished);
-  const ans = await tutorRespond(polished);
-  addMsg("ai", ans.reply + formatFooter(ans));
+  await handleUserText(polished);
 };
 
 renderPhrase();
 
-// Net pill initial
-netPill.textContent = AI_ENDPOINT ? "🌐 IA: configurada" : "🌐 IA: no configurada";
+/** ===== Mensaje inicial (tutor interactúa desde el inicio) ===== */
+setStatus("idle","Idle");
+addMsg("ai",
+`Hi! I’m Teacher Emma (AI).
+Type a sentence or tap 🎤 to speak.
+
+Start with:
+“I need help.”`);
+addMsg("ai", "After I reply, tap 🔊 Hablar respuesta to hear my voice (if supported).");
 </script>
 </body>
 </html>
