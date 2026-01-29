@@ -1,4 +1,68 @@
-<!DOCTYPE html>
+<!DOCTYPE html><!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <title>Learn English AI</title>
+
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #0f172a;
+      color: white;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+    }
+    .card {
+      background: #1e293b;
+      padding: 30px;
+      border-radius: 12px;
+      max-width: 400px;
+      text-align: center;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- 👇 AQUÍ EMPIEZA LA APP -->
+  <div class="card">
+    <h1>Learn English AI 🇺🇸</h1>
+
+    <p>You just arrived in the U.S. A teacher speaks to you.</p>
+
+    <button onclick="speak()">🔊 Teacher Anna</button>
+
+    <p>Say this in English:</p>
+    <strong>¿De dónde eres?</strong>
+
+    <input id="answer" placeholder="Type your answer..." />
+
+    <button onclick="check()">Check</button>
+
+    <p id="feedback"></p>
+  </div>
+
+  <script>
+    function speak() {
+      const s = new SpeechSynthesisUtterance("Where are you from?");
+      s.lang = "en-US";
+      speechSynthesis.speak(s);
+    }
+
+    function check() {
+      const v = document.getElementById("answer").value.toLowerCase().trim();
+      document.getElementById("feedback").innerText =
+        v === "where are you from"
+          ? "✅ Perfect!"
+          : "❌ Try again. Listen to the teacher.";
+    }
+  </script>
+  <!-- 👆 AQUÍ TERMINA -->
+
+</body>
+</html>
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
@@ -105,7 +169,56 @@
   </style>
 </head>
 <body>
-  <div class="container">
+  <div class="card">
+  <h1>Learn English AI 🇺🇸</h1>
+
+  <p class="story">
+    You just arrived in the United States.  
+    A friendly teacher talks to you.
+  </p>
+
+  <div class="teacher">
+    👩‍🏫 <strong>Teacher Anna</strong>
+  </div>
+
+  <p class="question">
+    Say this in English:
+  </p>
+
+  <p class="spanish">
+    ¿De dónde eres?
+  </p>
+
+  <button onclick="speak()">🔊 Listen to Teacher</button>
+
+  <input id="answer" placeholder="Type your answer here..." />
+
+  <button onclick="check()">Check my English</button>
+
+  <p id="feedback"></p>
+</div>
+
+<script>
+function speak() {
+  const text = "Where are you from?";
+  const s = new SpeechSynthesisUtterance(text);
+  s.lang = "en-US";
+  s.rate = 0.9;
+  s.pitch = 1.1;
+  speechSynthesis.speak(s);
+}
+
+function check() {
+  const user = document.getElementById("answer").value.toLowerCase().trim();
+  const feedback = document.getElementById("feedback");
+
+  if (user === "where are you from") {
+    feedback.innerText = "✅ Great job! Teacher Anna is proud of you.";
+  } else {
+    feedback.innerText = "❌ Almost. Listen again and try.";
+  }
+}
+</script>
     <div class="card" id="home">
       <h1>Learn English AI 🇺🇸</h1>
       <p>Practice English with AI teachers</p>
