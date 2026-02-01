@@ -3,599 +3,457 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>English Tutor AI — Interactivo</title>
+  <title>Bartender para Eventos | Reservas</title>
+  <meta name="description" content="Servicio profesional de bartender para eventos privados, bodas, cumpleaños y fiestas. Reserva fácil por WhatsApp." />
+
   <style>
     :root{
-      --bg:#0b1220; --panel:#0f172a; --card:#101b33; --line:#22304f;
-      --text:#e5e7eb; --muted:#94a3b8; --green:#22c55e; --red:#ef4444; --yellow:#fbbf24;
-      --radius:16px;
+      --bg:#0b1220;
+      --panel:#0f172a;
+      --card:#101b33;
+      --line:#22304f;
+      --text:#e5e7eb;
+      --muted:#94a3b8;
+      --accent:#22c55e;
+      --accent2:#38bdf8;
+      --warn:#fbbf24;
+      --radius:18px;
+      --shadow: 0 18px 40px rgba(0,0,0,.35);
     }
     *{box-sizing:border-box}
     body{
-      margin:0; color:var(--text);
-      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Arial;
-      background:linear-gradient(180deg,#070c16,#0b1220 35%,#070c16);
+      margin:0;
+      font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+      background: radial-gradient(1200px 600px at 20% 10%, rgba(56,189,248,.18), transparent 60%),
+                  radial-gradient(1000px 500px at 80% 0%, rgba(34,197,94,.16), transparent 60%),
+                  linear-gradient(180deg, #070c16, var(--bg) 35%, #070c16);
+      color:var(--text);
     }
-    .wrap{max-width:980px;margin:0 auto;padding:18px}
-    .topbar{
-      display:flex;gap:12px;align-items:center;justify-content:space-between;
-      background:rgba(15,23,42,.65); border:1px solid var(--line);
-      padding:14px 14px; border-radius:18px; position:sticky; top:10px; z-index:10;
-      backdrop-filter: blur(8px);
+    a{color:inherit;text-decoration:none}
+    .wrap{max-width:1100px;margin:0 auto;padding:24px}
+    header{
+      position:sticky; top:0; z-index:10;
+      background: rgba(11,18,32,.6);
+      backdrop-filter: blur(10px);
+      border-bottom: 1px solid rgba(34,48,79,.6);
     }
-    .brand{display:flex;flex-direction:column;gap:2px}
-    .brand b{font-size:15px}
-    .brand small{color:var(--muted)}
-    .pill{
-      display:flex;gap:10px;align-items:center; flex-wrap:wrap; justify-content:flex-end;
-      font-size:12px; color:var(--muted);
+    .nav{
+      display:flex; align-items:center; justify-content:space-between;
+      gap:14px;
+      padding:14px 24px;
+      max-width:1100px; margin:0 auto;
     }
-    .pill span{
-      padding:6px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(16,27,51,.6)
+    .brand{
+      display:flex; align-items:center; gap:10px; font-weight:800;
+      letter-spacing:.2px;
     }
-    .grid{display:grid;grid-template-columns:1.15fr .85fr;gap:14px;margin-top:14px}
-    @media (max-width:900px){.grid{grid-template-columns:1fr}}
-    .panel{
-      background:rgba(15,23,42,.55);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
+    .logo{
+      width:36px;height:36px;border-radius:12px;
+      background: linear-gradient(135deg, rgba(34,197,94,1), rgba(56,189,248,1));
+      box-shadow: 0 10px 24px rgba(34,197,94,.18);
     }
-    .h2{display:flex;align-items:center;justify-content:space-between;gap:10px;margin:0 0 10px 0}
-    .h2 h2{font-size:14px;margin:0;color:var(--text)}
-    .h2 small{color:var(--muted)}
+    .navlinks{display:flex; gap:14px; flex-wrap:wrap; align-items:center}
+    .chip{
+      padding:9px 12px; border-radius:999px;
+      border:1px solid rgba(34,48,79,.9);
+      background: rgba(16,27,51,.55);
+      color:var(--text);
+      font-weight:600;
+      font-size:14px;
+    }
+    .chip:hover{border-color: rgba(56,189,248,.8)}
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center;
+      gap:10px;
+      padding:12px 14px;
+      border-radius:12px;
+      border:1px solid rgba(34,48,79,.9);
+      background: rgba(16,27,51,.65);
+      color:var(--text);
+      font-weight:800;
+      cursor:pointer;
+      transition: transform .12s ease, border-color .12s ease;
+      user-select:none;
+    }
+    .btn:hover{transform: translateY(-1px); border-color: rgba(56,189,248,.8)}
+    .btn.primary{
+      background: linear-gradient(135deg, rgba(34,197,94,.95), rgba(56,189,248,.85));
+      border-color: transparent;
+      color:#06101f;
+    }
+    .btn.primary:hover{transform: translateY(-1px) scale(1.01)}
+    .hero{
+      display:grid;
+      grid-template-columns: 1.2fr .8fr;
+      gap:22px;
+      align-items:stretch;
+      padding:34px 0 18px;
+    }
+    @media (max-width: 900px){ .hero{grid-template-columns:1fr; } }
+    .hcard{
+      border:1px solid rgba(34,48,79,.85);
+      background: rgba(15,23,42,.6);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      padding:22px;
+    }
+    h1{
+      margin:0 0 10px;
+      font-size: clamp(28px, 3.4vw, 44px);
+      line-height:1.05;
+      letter-spacing:-.6px;
+    }
+    .sub{
+      color:var(--muted);
+      font-size:16px;
+      line-height:1.6;
+      margin:0 0 16px;
+    }
+    .badges{
+      display:flex; gap:10px; flex-wrap:wrap;
+      margin:14px 0 18px;
+    }
+    .badge{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:9px 12px; border-radius:999px;
+      background: rgba(16,27,51,.75);
+      border:1px solid rgba(34,48,79,.9);
+      color:var(--text);
+      font-weight:700;
+      font-size:14px;
+    }
+    .dot{
+      width:10px; height:10px; border-radius:50%;
+      background: var(--accent);
+      box-shadow: 0 0 0 6px rgba(34,197,94,.12);
+    }
+    .actions{display:flex; gap:12px; flex-wrap:wrap; margin-top:12px}
+    .grid{
+      display:grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap:16px;
+      margin:18px 0 26px;
+    }
+    @media (max-width: 900px){ .grid{grid-template-columns:1fr;} }
     .card{
-      background:rgba(16,27,51,.7);
-      border:1px solid var(--line);
-      border-radius:18px;
-      padding:14px;
+      border:1px solid rgba(34,48,79,.85);
+      background: rgba(16,27,51,.55);
+      border-radius: var(--radius);
+      padding:16px;
     }
-
-    /* Tutor block */
-    .tutorHeader{display:flex;gap:12px;align-items:center;justify-content:space-between}
-    .tutorLeft{display:flex;gap:10px;align-items:center}
-    .avatar{
-      width:44px;height:44px;border-radius:14px;
-      background:linear-gradient(180deg, rgba(34,197,94,.22), rgba(148,163,184,.12));
-      border:1px solid rgba(34,197,94,.35);
-      display:grid;place-items:center;font-size:18px
+    .card h3{margin:0 0 6px; font-size:16px}
+    .card p{margin:0; color:var(--muted); line-height:1.55; font-size:14px}
+    .section{
+      margin:24px 0;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:16px;
+      align-items:start;
     }
-    .tutorMeta{display:flex;flex-direction:column;line-height:1.15}
-    .tutorMeta b{font-size:13px}
-    .tutorMeta small{color:var(--muted);font-size:12px}
-    .statusDot{width:8px;height:8px;border-radius:50%}
-    .statusRow{display:flex;gap:8px;align-items:center}
-
-    .btnRow{display:flex;gap:10px;flex-wrap:wrap;justify-content:flex-end}
-    button{
-      appearance:none;border:0;cursor:pointer;
-      padding:12px 14px;border-radius:14px;font-weight:800;
-      background:rgba(148,163,184,.12);color:var(--text);
-      border:1px solid var(--line);
+    @media (max-width: 900px){ .section{grid-template-columns:1fr;} }
+    .title{
+      font-size:20px;
+      margin:0 0 10px;
+      letter-spacing:-.2px;
     }
-    button.primary{background:var(--green);color:#04120a;border-color:rgba(34,197,94,.6)}
-    button.danger{background:var(--red);color:#1b0202;border-color:rgba(239,68,68,.6)}
-    button.warn{background:var(--yellow);color:#1a1200;border-color:rgba(251,191,36,.7)}
-    button:disabled{opacity:.55;cursor:not-allowed}
-
-    /* Chat */
-    .chat{
-      margin-top:12px;
-      border:1px solid var(--line);
-      border-radius:18px;
-      background:rgba(11,18,32,.55);
-      padding:12px;
-      height:320px;
-      overflow:auto;
+    .list{
+      display:grid; gap:10px;
+      margin:0; padding:0; list-style:none;
     }
-    .msg{display:flex;gap:10px;margin:10px 0}
-    .msg .bubble{
-      max-width:88%;
-      padding:10px 12px;border-radius:16px;border:1px solid var(--line);
-      background:rgba(16,27,51,.72)
+    .li{
+      border:1px solid rgba(34,48,79,.85);
+      background: rgba(15,23,42,.55);
+      border-radius: 14px;
+      padding:12px 12px;
+      display:flex; gap:10px; align-items:flex-start;
     }
-    .msg.user{justify-content:flex-end}
-    .msg.user .bubble{
-      background:rgba(34,197,94,.15);
-      border-color:rgba(34,197,94,.35)
+    .icon{
+      width:34px; height:34px; border-radius:12px;
+      background: rgba(56,189,248,.18);
+      border:1px solid rgba(56,189,248,.25);
+      display:flex; align-items:center; justify-content:center;
+      flex:0 0 auto;
     }
-    .msg.ai .bubble{background:rgba(148,163,184,.10)}
-    .bubble .meta{font-size:11px;color:var(--muted);margin-bottom:6px}
-    .bubble .text{white-space:pre-wrap}
-
-    .inputRow{display:flex;gap:10px;margin-top:10px}
-    .inputRow input{
-      flex:1;
-      padding:12px 12px;border-radius:14px;border:1px solid var(--line);
-      background:rgba(16,27,51,.7);color:var(--text);
+    .icon span{font-size:18px}
+    .li b{display:block; margin-bottom:3px}
+    .li small{color:var(--muted); line-height:1.4; display:block}
+    form{
+      display:grid; gap:10px;
+    }
+    .row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width: 560px){ .row{grid-template-columns:1fr;} }
+    label{font-weight:700; font-size:13px; color:var(--text)}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius: 12px;
+      border:1px solid rgba(34,48,79,.9);
+      background: rgba(7,12,22,.65);
+      color: var(--text);
       outline:none;
     }
-    .helper{color:var(--muted);font-size:12px;margin-top:8px;line-height:1.4}
-    .tiny{font-size:11px;color:var(--muted)}
-
-    /* Exercise */
-    .prompt{font-size:15px;margin:0 0 10px 0;line-height:1.35}
-    .tag{font-size:12px;color:var(--muted)}
-    .box{
-      border:1px dashed rgba(148,163,184,.35);
-      border-radius:16px;padding:12px;background:rgba(16,27,51,.35);
-      min-height:52px;display:flex;align-items:center;gap:8px;flex-wrap:wrap
+    textarea{min-height:90px; resize:vertical}
+    .hint{color:var(--muted); font-size:12.5px; line-height:1.4}
+    footer{
+      border-top:1px solid rgba(34,48,79,.6);
+      padding:18px 0 30px;
+      color:var(--muted);
+      text-align:center;
+      font-size:13px;
     }
-    .chip{
-      padding:8px 10px;border-radius:999px;border:1px solid var(--line);
-      background:rgba(16,27,51,.7);cursor:pointer;font-weight:800
+    .notice{
+      border:1px dashed rgba(251,191,36,.55);
+      background: rgba(251,191,36,.08);
+      border-radius: 14px;
+      padding:12px;
+      color: var(--text);
+      font-size:13px;
+      line-height:1.45;
     }
-    .chip:active{transform:scale(.98)}
-    .note{font-size:12px;color:var(--muted);margin-top:10px}
-    .result{
-      margin-top:12px;border:1px solid var(--line);border-radius:16px;
-      padding:12px;background:rgba(16,27,51,.55)
-    }
-    .ok{color:#a7f3d0}
-    .bad{color:#fecaca}
-    .muted{color:var(--muted)}
   </style>
 </head>
+
 <body>
-  <div class="wrap">
-    <div class="topbar">
+  <header>
+    <div class="nav">
       <div class="brand">
-        <b>English Tutor AI — Interactivo</b>
-        <small>Tutor visible + chat + corrección + micrófono + voz (opcional)</small>
-      </div>
-      <div class="pill">
-        <span id="pillTutor">🤖 Tutor: Local (Listo)</span>
-        <span id="pillMic">🎙️ Mic: sin probar</span>
-        <span id="pillVoice">🔊 Voz: lista</span>
-      </div>
-    </div>
-
-    <div class="grid">
-      <!-- Tutor -->
-      <div class="panel">
-        <div class="h2">
-          <h2>🤖 Tutor AI (Interactivo)</h2>
-          <small>Responde siempre (Local o IA real)</small>
-        </div>
-
-        <div class="card">
-          <div class="tutorHeader">
-            <div class="tutorLeft">
-              <div class="avatar">🧑‍🏫</div>
-              <div class="tutorMeta">
-                <b id="tutorName">Teacher Emma (AI)</b>
-                <div class="statusRow">
-                  <div class="statusDot" id="statusDot" style="background: var(--muted)"></div>
-                  <small id="statusText">Idle</small>
-                </div>
-              </div>
-            </div>
-
-            <div class="btnRow">
-              <button id="btnSpeak" class="primary">🎤 Hablar (EN)</button>
-              <button id="btnStop" class="danger" disabled>⏹️ Parar</button>
-              <button id="btnSay" class="warn">🔊 Hablar respuesta</button>
-              <button id="btnHint">💡 Pista</button>
-            </div>
-          </div>
-
-          <div class="chat" id="chat"></div>
-
-          <div class="inputRow">
-            <input id="userInput" placeholder="Escribe en inglés..." autocomplete="off" />
-            <button id="btnSend" class="primary">Enviar</button>
-          </div>
-
-          <div class="helper">
-            iPhone: si el mic falla → <b>Ajustes → Safari → Micrófono → Permitir</b> y en la página <b>aA → Configuración del sitio → Micrófono → Permitir</b>.
-          </div>
-          <div class="tiny" style="margin-top:8px">
-            IA real opcional: pega tu endpoint en el código (AI_ENDPOINT). Si no, el Tutor Local siempre responde.
-          </div>
+        <div class="logo" aria-hidden="true"></div>
+        <div>
+          <div style="font-size:15px">Bartender para Eventos</div>
+          <div style="font-size:12px;color:var(--muted);font-weight:700">Reservas rápidas • Servicio premium</div>
         </div>
       </div>
 
-      <!-- Ejercicio -->
-      <div class="panel">
-        <div class="h2">
-          <h2>🧩 Ejercicio (Word Bank)</h2>
-          <small>Arma + revisa + envía al tutor</small>
-        </div>
-
-        <div class="card">
-          <p class="prompt"><span class="tag">Meta de hoy</span><br>
-            Construye y di: <b>I need help.</b> Luego súbelo a: <b>I need help with English.</b>
-          </p>
-
-          <div class="box" id="bank">
-            <div class="chip" data-word="I">I</div>
-            <div class="chip" data-word="need">need</div>
-            <div class="chip" data-word="help.">help.</div>
-            <div class="chip" data-word="with">with</div>
-            <div class="chip" data-word="English.">English.</div>
-            <div class="chip" data-word="please.">please.</div>
-          </div>
-
-          <div class="note">Tu frase (toca para quitar palabras):</div>
-          <div class="box" id="phraseBox"><span class="muted">Toca palabras para armar la oración…</span></div>
-
-          <div class="btnRow" style="margin-top:10px;justify-content:flex-start">
-            <button id="btnRedo">↩️ Rehacer</button>
-            <button id="btnToInput">➡️ Pasar al input</button>
-            <button id="btnReview" class="primary">✅ Revisar + enviar</button>
-          </div>
-
-          <div class="result" id="reviewBox" style="display:none"></div>
-        </div>
+      <div class="navlinks">
+        <a class="chip" href="#servicios">Servicios</a>
+        <a class="chip" href="#paquetes">Paquetes</a>
+        <a class="chip" href="#reservar">Reservar</a>
+        <button class="btn primary" id="btnWhatsAppTop">WhatsApp</button>
       </div>
     </div>
-  </div>
+  </header>
 
-<script>
-/** ==========================================================
- *  (2) IA real opcional: pega aquí tu endpoint cuando lo tengas
- *  Si está vacío, el Tutor Local SIEMPRE responde (modo 3).
- *  ========================================================== */
-const AI_ENDPOINT = ""; // ejemplo: "https://tu-app.vercel.app/api/tutor"
+  <main class="wrap">
+    <section class="hero">
+      <div class="hcard">
+        <h1>Bar profesional para tu evento 🍸</h1>
+        <p class="sub">
+          Llevo el bar completo, coctelería y atención elegante para bodas, cumpleaños, quinceañeras y eventos privados.
+          Cotiza en 1 minuto y reserva por WhatsApp.
+        </p>
 
-/** ===== Helpers UI ===== */
-const el = (id) => document.getElementById(id);
-const chat = el("chat");
-const statusDot = el("statusDot");
-const statusText = el("statusText");
-const pillMic = el("pillMic");
-const pillTutor = el("pillTutor");
-const pillVoice = el("pillVoice");
+        <div class="badges">
+          <div class="badge"><span class="dot"></span> Puntualidad + Presentación</div>
+          <div class="badge">✅ Bebidas clásicas y premium</div>
+          <div class="badge">🧊 Hielo • Cristalería (opcional)</div>
+        </div>
 
-function setStatus(type, text){
-  const map = {
-    idle: "var(--muted)",
-    listening: "var(--yellow)",
-    thinking: "rgba(148,163,184,.9)",
-    ok: "var(--green)",
-    bad: "var(--red)"
-  };
-  statusDot.style.background = map[type] || "var(--muted)";
-  statusText.textContent = text;
-}
+        <div class="actions">
+          <a class="btn primary" href="#reservar">Cotizar ahora</a>
+          <button class="btn" id="btnCall">Llamar</button>
+          <button class="btn" id="btnCopy">Copiar número</button>
+        </div>
 
-let lastTutorText = "";
+        <div style="margin-top:14px" class="notice">
+          <b>Tip:</b> Si me dices ciudad, fecha, número de invitados y si quieres alcohol incluido o solo servicio,
+          te doy precio exacto rápido.
+        </div>
+      </div>
 
-function addMsg(role, text){
-  const row = document.createElement("div");
-  row.className = "msg " + (role === "user" ? "user" : "ai");
-  const bubble = document.createElement("div");
-  bubble.className = "bubble";
+      <div class="hcard">
+        <h2 class="title" id="servicios">Servicios</h2>
+        <div class="grid" style="grid-template-columns:1fr; margin:0">
+          <div class="card">
+            <h3>🍹 Coctelería en vivo</h3>
+            <p>Barra dinámica con tragos clásicos, tropicales y signature.</p>
+          </div>
+          <div class="card">
+            <h3>🎉 Eventos privados</h3>
+            <p>Cumpleaños, bodas, reuniones familiares, corporate y más.</p>
+          </div>
+          <div class="card">
+            <h3>🧾 Menú personalizado</h3>
+            <p>Selecciona 3–8 tragos y lo adapto al estilo de tu evento.</p>
+          </div>
+        </div>
+      </div>
+    </section>
 
-  const meta = document.createElement("div");
-  meta.className = "meta";
-  meta.textContent = role === "user" ? "You" : "Tutor AI";
+    <section class="section" id="paquetes">
+      <div class="hcard">
+        <h2 class="title">Paquetes sugeridos</h2>
+        <ul class="list">
+          <li class="li">
+            <div class="icon"><span>⏱️</span></div>
+            <div>
+              <b>Básico (2–3 horas)</b>
+              <small>Ideal para reuniones pequeñas • 1 bartender • menú de tragos clásicos.</small>
+            </div>
+          </li>
+          <li class="li">
+            <div class="icon"><span>⭐</span></div>
+            <div>
+              <b>Premium (4–5 horas)</b>
+              <small>Barra completa • más variedad de tragos • mejor para 40–80 invitados.</small>
+            </div>
+          </li>
+          <li class="li">
+            <div class="icon"><span>👑</span></div>
+            <div>
+              <b>Full Experience</b>
+              <small>Coctelería signature + garnish + setup elegante (según disponibilidad).</small>
+            </div>
+          </li>
+        </ul>
+        <p class="hint" style="margin-top:10px">
+          *Los precios cambian por ciudad, horas, invitados y si el alcohol lo pone el cliente o va incluido.
+        </p>
+      </div>
 
-  const body = document.createElement("div");
-  body.className = "text";
-  body.textContent = text;
+      <div class="hcard" id="reservar">
+        <h2 class="title">Cotiza / Reserva</h2>
 
-  bubble.appendChild(meta);
-  bubble.appendChild(body);
-  row.appendChild(bubble);
-  chat.appendChild(row);
-  chat.scrollTop = chat.scrollHeight;
+        <form id="quoteForm">
+          <div class="row">
+            <div>
+              <label>Fecha</label>
+              <input type="date" id="date" required />
+            </div>
+            <div>
+              <label>Horas de servicio</label>
+              <select id="hours" required>
+                <option value="2-3 horas">2–3 horas</option>
+                <option value="4-5 horas">4–5 horas</option>
+                <option value="6+ horas">6+ horas</option>
+              </select>
+            </div>
+          </div>
 
-  if(role === "ai") lastTutorText = text;
-}
+          <div class="row">
+            <div>
+              <label>Invitados (aprox.)</label>
+              <input type="number" id="guests" min="1" placeholder="Ej: 50" required />
+            </div>
+            <div>
+              <label>Tipo de evento</label>
+              <select id="eventType" required>
+                <option>Cumpleaños</option>
+                <option>Boda</option>
+                <option>Quinceañera</option>
+                <option>Corporativo</option>
+                <option>Reunión familiar</option>
+                <option>Otro</option>
+              </select>
+            </div>
+          </div>
 
-function normalize(s){
-  return (s || "").trim().replace(/\s+/g," ");
-}
+          <div class="row">
+            <div>
+              <label>Ciudad</label>
+              <input type="text" id="city" placeholder="Ej: Galveston, TX" required />
+            </div>
+            <div>
+              <label>Alcohol</label>
+              <select id="alcohol" required>
+                <option value="Cliente pone alcohol">Cliente pone alcohol</option>
+                <option value="Quiero opción con alcohol incluido">Quiero opción con alcohol incluido</option>
+                <option value="Aún no sé">Aún no sé</option>
+              </select>
+            </div>
+          </div>
 
-function smartPolish(t){
-  let s = normalize(t);
-  if(!s) return s;
-  s = s.replace(/\bi\b/g,"I");
-  s = s[0].toUpperCase() + s.slice(1);
-  if(!/[.!?]$/.test(s)) s += ".";
-  return s;
-}
+          <div>
+            <label>Detalles (opcional)</label>
+            <textarea id="details" placeholder="Ej: Quiero 5 tragos, temática tropical, barra elegante, etc."></textarea>
+            <div class="hint">Entre más detalles, más exacta la cotización.</div>
+          </div>
 
-/** ===== (3) Tutor Local (interacción real sin internet) ===== */
-function localTutor(userText){
-  const t = normalize(userText);
-  const low = t.toLowerCase();
+          <div class="actions">
+            <button class="btn primary" type="submit">Enviar por WhatsApp</button>
+            <button class="btn" type="button" id="btnExample">Rellenar ejemplo</button>
+          </div>
 
-  let score = 75;
-  let correction = "";
-  let reply = "";
+          <div class="hint">
+            Al enviar, se abrirá WhatsApp con el mensaje listo para mandar.
+          </div>
+        </form>
+      </div>
+    </section>
 
-  if(!t){
-    return { reply: "I didn’t catch that. Type: “I need help.”", score: 0, correction: "" };
-  }
+    <footer>
+      © <span id="year"></span> • Bartender para Eventos • Reservas por WhatsApp
+    </footer>
+  </main>
 
-  // Objetivo principal
-  if(low === "i need help" || low === "i need help."){
-    score = 95;
-    correction = "I need help.";
-    reply =
-`✅ Correct!
-Now upgrade:
-• I need help with English.
-• Can you help me, please?
+  <script>
+    // ✅ TU NÚMERO (ya lo tengo de lo que me dijiste)
+    const phoneE164 = "14095195506"; // +1 409 519 5506
+    const prettyPhone = "+1 (409) 519-5506";
 
-Say it again slowly: “I need help.”`;
-    return { reply, score, correction };
-  }
+    const waLink = (text) => `https://wa.me/${phoneE164}?text=${encodeURIComponent(text)}`;
 
-  // Objetivo 2
-  if(low.includes("i need help with english")){
-    score = 92;
-    correction = "I need help with English.";
-    reply =
-`✅ Nice!
-Now answer:
-👉 What do you need help with?
+    // Top buttons
+    document.getElementById("btnWhatsAppTop").addEventListener("click", () => {
+      const msg = `Hola, quiero cotizar servicio de bartender. Mi evento es:`;
+      window.open(waLink(msg), "_blank");
+    });
 
-Example:
-• I need help with my pronunciation.`;
-    return { reply, score, correction };
-  }
+    document.getElementById("btnCall").addEventListener("click", () => {
+      window.location.href = `tel:${phoneE164}`;
+    });
 
-  // Si tiene help/need pero está raro
-  if(low.includes("need") && low.includes("help") && !low.startsWith("i need")){
-    score = 55;
-    correction = "I need help.";
-    reply =
-`❌ Almost. In English: Subject + verb.
-Try:
-• I need help.
-
-Repeat: “I need help.”`;
-    return { reply, score, correction };
-  }
-
-  // Respuesta general
-  correction = smartPolish(t);
-  reply =
-`Here is a cleaner version:
-• ${correction}
-
-Now repeat it slowly once.`;
-  return { reply, score, correction };
-}
-
-function formatFooter(ans){
-  const bits = [];
-  if(ans.correction) bits.push("Correction: " + ans.correction);
-  if(typeof ans.score === "number") bits.push("Score: " + ans.score + "/100");
-  return bits.length ? ("\n\n—\n" + bits.join("\n")) : "";
-}
-
-/** ===== (2) IA Real opcional con fallback a Local ===== */
-async function tutorRespond(userText){
-  if(AI_ENDPOINT){
-    try{
-      setStatus("thinking","Thinking…");
-      pillTutor.textContent = "🤖 Tutor: IA real (Conectada)";
-      const res = await fetch(AI_ENDPOINT,{
-        method:"POST",
-        headers:{ "Content-Type":"application/json" },
-        body: JSON.stringify({
-          message: userText,
-          context: { goal: "I need help.", level: "A1/A2" }
-        })
-      });
-      if(res.ok){
-        const data = await res.json();
-        const reply = data.reply || "(No reply)";
-        const score = (typeof data.score === "number") ? data.score : null;
-        const correction = data.correction || "";
-        setStatus("ok","Replied");
-        return { reply, score, correction };
+    document.getElementById("btnCopy").addEventListener("click", async () => {
+      try{
+        await navigator.clipboard.writeText(prettyPhone);
+        alert("Número copiado: " + prettyPhone);
+      }catch(e){
+        alert("No pude copiar. Tu número es: " + prettyPhone);
       }
-    }catch(e){
-      // cae a local
-    }
-  }
-  pillTutor.textContent = "🤖 Tutor: Local (Listo)";
-  const ans = localTutor(userText);
-  setStatus(ans.score >= 80 ? "ok" : "bad", ans.score >= 80 ? "Good" : "Needs work");
-  return ans;
-}
+    });
 
-/** ===== Voz (Text-to-Speech) ===== */
-function speak(text){
-  if(!("speechSynthesis" in window)){
-    pillVoice.textContent = "🔊 Voz: no soportada";
-    return;
-  }
-  const main = (text || "").split("\n\n—\n")[0]; // no leer score/correction
-  if(!main.trim()) return;
+    // Form submit -> WhatsApp
+    document.getElementById("quoteForm").addEventListener("submit", (e) => {
+      e.preventDefault();
+      const date = document.getElementById("date").value;
+      const hours = document.getElementById("hours").value;
+      const guests = document.getElementById("guests").value;
+      const eventType = document.getElementById("eventType").value;
+      const city = document.getElementById("city").value;
+      const alcohol = document.getElementById("alcohol").value;
+      const details = document.getElementById("details").value.trim();
 
-  try{
-    window.speechSynthesis.cancel();
-    const u = new SpeechSynthesisUtterance(main);
-    u.lang = "en-US";
-    window.speechSynthesis.speak(u);
-    pillVoice.textContent = "🔊 Voz: hablando";
-    u.onend = () => pillVoice.textContent = "🔊 Voz: lista";
-  }catch(e){
-    pillVoice.textContent = "🔊 Voz: error";
-  }
-}
+      const lines = [
+        "Hola, quiero una cotización de bartender:",
+        `📍 Ciudad: ${city}`,
+        `📅 Fecha: ${date}`,
+        `⏱️ Horas: ${hours}`,
+        `👥 Invitados: ${guests}`,
+        `🎉 Evento: ${eventType}`,
+        `🥃 Alcohol: ${alcohol}`,
+      ];
+      if(details) lines.push(`📝 Detalles: ${details}`);
 
-/** ===== Mic (Speech-to-Text) ===== */
-let recognition = null;
+      lines.push("", "¿Me puedes dar precio y disponibilidad? Gracias.");
 
-function initMic(){
-  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
-  if(!SR){
-    pillMic.textContent = "🎙️ Mic: no soportado";
-    return null;
-  }
-  const r = new SR();
-  r.lang = "en-US";
-  r.interimResults = false;
-  r.maxAlternatives = 1;
+      window.open(waLink(lines.join("\n")), "_blank");
+    });
 
-  r.onstart = () => {
-    setStatus("listening","Listening…");
-    pillMic.textContent = "🎙️ Mic: escuchando";
-    el("btnSpeak").disabled = true;
-    el("btnStop").disabled = false;
-  };
+    // Example filler
+    document.getElementById("btnExample").addEventListener("click", () => {
+      const today = new Date();
+      const inTwoWeeks = new Date(today.getTime() + 14*24*60*60*1000);
+      const iso = inTwoWeeks.toISOString().slice(0,10);
 
-  r.onend = () => {
-    el("btnSpeak").disabled = false;
-    el("btnStop").disabled = true;
-    if(statusText.textContent === "Listening…") setStatus("idle","Idle");
-    if(pillMic.textContent === "🎙️ Mic: escuchando") pillMic.textContent = "🎙️ Mic: detenido";
-  };
+      document.getElementById("date").value = iso;
+      document.getElementById("hours").value = "4-5 horas";
+      document.getElementById("guests").value = "60";
+      document.getElementById("eventType").value = "Cumpleaños";
+      document.getElementById("city").value = "Galveston, TX";
+      document.getElementById("alcohol").value = "Cliente pone alcohol";
+      document.getElementById("details").value = "Tema tropical, quiero 5 tragos (Margarita, Mojito, Paloma, Piña Colada, Old Fashioned).";
+    });
 
-  r.onerror = (ev) => {
-    setStatus("bad","Mic error");
-    pillMic.textContent = "🎙️ Mic: error (" + (ev.error || "unknown") + ")";
-    addMsg("ai","Mic error: " + (ev.error || "unknown") + "\nTip iPhone: Ajustes → Safari → Micrófono → Permitir");
-  };
-
-  r.onresult = async (event) => {
-    const spoken = event.results?.[0]?.[0]?.transcript || "";
-    pillMic.textContent = "🎙️ Mic: capturado";
-    if(spoken){
-      addMsg("user", spoken);
-      const ans = await tutorRespond(spoken);
-      addMsg("ai", ans.reply + formatFooter(ans));
-    }else{
-      addMsg("ai","I didn’t catch anything. Try again.");
-    }
-  };
-
-  pillMic.textContent = "🎙️ Mic: listo";
-  return r;
-}
-
-recognition = initMic();
-
-/** ===== Acciones ===== */
-async function handleUserText(t){
-  const text = normalize(t);
-  if(!text) return;
-  addMsg("user", text);
-  setStatus("thinking","Thinking…");
-  const ans = await tutorRespond(text);
-  addMsg("ai", ans.reply + formatFooter(ans));
-}
-
-el("btnSend").onclick = async () => {
-  const t = el("userInput").value;
-  el("userInput").value = "";
-  await handleUserText(t);
-};
-
-el("userInput").addEventListener("keydown",(e)=>{
-  if(e.key === "Enter") el("btnSend").click();
-});
-
-el("btnHint").onclick = () => {
-  addMsg("ai",
-`Hint:
-Subject + verb → “I need …”
-Try:
-• I need help.
-• I need help with English.`);
-};
-
-el("btnSay").onclick = () => {
-  if(!lastTutorText){
-    addMsg("ai","Say something first, then I’ll read my reply.");
-    return;
-  }
-  speak(lastTutorText);
-};
-
-el("btnSpeak").onclick = () => {
-  if(!recognition){
-    addMsg("ai","Mic not supported here. Type instead.");
-    return;
-  }
-  try{ recognition.start(); }catch(e){}
-};
-
-el("btnStop").onclick = () => {
-  try{ recognition.stop(); }catch(e){}
-};
-
-/** ===== Word Bank ===== */
-let phraseWords = [];
-const phraseBox = el("phraseBox");
-
-function renderPhrase(){
-  phraseBox.innerHTML = "";
-  if(phraseWords.length === 0){
-    const span = document.createElement("span");
-    span.className = "muted";
-    span.textContent = "Toca palabras para armar la oración…";
-    phraseBox.appendChild(span);
-    return;
-  }
-  phraseWords.forEach((w, idx) => {
-    const chip = document.createElement("div");
-    chip.className = "chip";
-    chip.textContent = w;
-    chip.title = "Toca para quitar";
-    chip.onclick = () => { phraseWords.splice(idx,1); renderPhrase(); };
-    phraseBox.appendChild(chip);
-  });
-}
-
-el("bank").addEventListener("click",(e)=>{
-  const t = e.target;
-  if(!t.classList.contains("chip")) return;
-  phraseWords.push(t.dataset.word);
-  renderPhrase();
-});
-
-el("btnRedo").onclick = () => {
-  phraseWords = [];
-  el("reviewBox").style.display = "none";
-  renderPhrase();
-};
-
-el("btnToInput").onclick = () => {
-  const sentence = phraseWords.join(" ").replace(/\s+([.?!,])/g,"$1");
-  el("userInput").value = sentence;
-  el("userInput").focus();
-};
-
-el("btnReview").onclick = async () => {
-  const reviewBox = el("reviewBox");
-  const sentence = phraseWords.join(" ").replace(/\s+([.?!,])/g,"$1");
-  reviewBox.style.display = "block";
-
-  if(!sentence.trim()){
-    reviewBox.innerHTML = `<div class="bad">❌ Arma una frase primero.</div>`;
-    return;
-  }
-
-  const target = "I need help.";
-  const polished = smartPolish(sentence);
-  const ok = normalize(polished).toLowerCase() === target.toLowerCase();
-
-  reviewBox.innerHTML = ok
-    ? `<div class="ok">✅ Correcto: <b>${target}</b></div><div class="muted">Enviado al Tutor para subir nivel.</div>`
-    : `<div class="bad">❌ Casi. Recomendado: <b>${target}</b></div><div class="muted">Tip: “I” va antes de “need”.</div>`;
-
-  await handleUserText(polished);
-};
-
-renderPhrase();
-
-/** ===== Mensaje inicial (tutor interactúa desde el inicio) ===== */
-setStatus("idle","Idle");
-addMsg("ai",
-`Hi! I’m Teacher Emma (AI).
-Type a sentence or tap 🎤 to speak.
-
-Start with:
-“I need help.”`);
-addMsg("ai", "After I reply, tap 🔊 Hablar respuesta to hear my voice (if supported).");
-</script>
+    document.getElementById("year").textContent = new Date().getFullYear();
+  </script>
 </body>
 </html>
